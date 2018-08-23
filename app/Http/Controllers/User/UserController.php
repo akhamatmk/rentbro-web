@@ -1,0 +1,132 @@
+<?php
+
+namespace App\Http\Controllers\User;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use JD\Cloudder\Facades\Cloudder;
+use Faker\Provider\Image;
+
+class UserController extends Controller
+{
+    public function profile()
+    {
+    	$response = get_api_response('user/info');
+    	return view('user/profile')
+                    ->with('user', $response->data)
+                    ->with('menu', 'account')
+                    ->with('active', 'profile');
+    }
+
+    public function address()
+    {
+        $response = get_api_response('user/info');
+        $province = get_api_response('place/province');
+        $address = get_api_response('user/address');
+        return view('user/address')
+                    ->with('user', $response->data)
+                    ->with('menu', 'account')
+                    ->with('address', $address->data)
+                    ->with('province', $province->data)
+                    ->with('active', 'address');   
+    }
+
+    public function change_password()
+    {
+        $response = get_api_response('user/info');
+        return view('user/password')
+                    ->with('user', $response->data)
+                    ->with('menu', 'account')
+                    ->with('active', 'change_password');
+    }
+
+    public function top_menu()
+    {
+    	$response = get_api_response('user/info');
+    	$html = "";
+    	if(isset($response->data))
+    		$html = view('layout.ajax_top_menu')->with(['data' => $response->data])->render();
+    	
+    	return response()->json(['html' => $html]);
+    }
+
+    public function profile_edit()
+    {
+        $response = get_api_response('user/info');
+        return view('user/profile_edit')->with('user', $response->data)->with('menu', 'account');
+    }
+
+    public function address_store()
+    {
+        $primary = isset($_POST['primary']) ? $_POST['primary'] : 0;
+        $_POST['primary'] = $primary;
+        $response = get_api_response('user/address/add', 'POST', [], $_POST);
+        return response()->json($response->code);
+    }
+
+    public function profile_edit_store(Request $request)
+    {
+        $birth = explode("-", $request->birth_date);
+        if(count($birth) < 2)
+            $result_date = date('Y-m-d');
+        else
+            $result_date = $birth[2]."-".$birth[1]."-".$birth[0];
+
+        $data["name"] = $request->name;
+        $data["birth"] = $result_date;
+        $data["username"] = $request->username;
+        $data["gender"] = (int) $request->gender;
+
+        $response = get_api_response('user/profile/edit', 'POST', [], $data);
+        return response()->json($response->code);
+    }
+
+    public function profile_image_change(Request $request)
+    {
+        $result_upload = Cloudder::upload($request->file('file')->getPathName());
+        $result = $result_upload->getResult();
+
+        $result['secure_url'] = str_replace('""', '', $result['secure_url']);
+
+        $response = get_api_response('user/profile/image/change', 'POST', [], ['image' => $result['secure_url']]);
+        return response()->json($response->code);
+    }
+
+    public function check_email(Request $request)
+    {
+        $response = get_api_response('user/check/email', 'POST', [], $_POST);
+        if($response->code == 200 And $response->data->exist == false)
+            return response()->json(false);
+
+        return response()->json(true);
+    }
+
+    public function validation($code)
+    {
+        $response = get_api_response('user/check/validation', 'POST', [], ['validation_code' => $code]);
+        if($response->code != 200)
+            return redirect('home') ;
+        else{
+            return view('user.change_data')->with('user', $response->data);
+        }
+    }
+
+    public function validation_store(Request $request)
+    {
+        $data["name"] = $request->name;
+        $data["birth"] = $request->birth;
+        $data["phone"] = $request->phone;
+        $data["gender"] = (int) $request->gender;
+        $data["image"] = $request->new_image ? $request->new_image : $request->older_image;
+        $data["password"] = $request->password ? $request->password : "";
+
+        $response = get_api_response('user/profile/edit/validation', 'POST', [], $data);
+
+        if($response->code != 200){
+            $response = get_api_response('user/info');
+            return view('user/info')->with('user', $response->data)->with('menu', 'account')->with('error_message', $response->message);
+        }
+
+        return redirect('account');
+    }
+}

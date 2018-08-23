@@ -1,0 +1,34 @@
+.error_message {float: left; width: 100%; box-shadow: 5px 10px; box-shadow: 0 0 10px 0 #FF3C3C; margin-top: 10px; margin-bottom: 10px}	
+.succes_message {float: left; width: 100%; box-shadow: 5px 10px; box-shadow: 0 0 10px 0 blue; margin-top: 10px; margin-bottom: 10px; color: green}
+.error_content{margin-left: 30px; color: red; text-align: left}
+.user-accounts-alt__separator {
+    display: flex;
+    align-items: center;
+    margin: 16px 0;
+
+}
+
+.user-accounts-hline {
+    display: inline-block;
+    border: .5px solid rgba(0,0,0,.12);
+    width: 30%;
+}
+
+.user-accounts-alt__separator-text {
+    font-size: 15px;
+    text-align: center;
+    color: #000;
+    width: 50%;
+}
+
+.user-accounts-alt__button {
+    position: relative;
+    display: inline-block;
+    padding: 17px 22px;
+    border: 1px solid rgba(0,0,0,.12);
+    background-color: #fff;
+    box-sizing: border-box;
+    width: 100%;
+    cursor: pointer;
+    color: #000;
+}
