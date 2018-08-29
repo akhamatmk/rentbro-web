@@ -183,7 +183,7 @@
 
 							<div class="col-md-4">
 								<div class="input-image" style="text-align: center;">
-									<img src="{{ $user->image }}" style="border-radius: 50px;" width="120px" id="image_profile" >
+									<img src="{{ $user->image->real }}" style="border-radius: 50px;" width="120px" id="image_profile" >
 									<br/>
 									<img src="{{ asset('images/preload.gif') }}" id="preload" style="display: none;" width="120px" >
 									<br/>
@@ -255,10 +255,10 @@
 						$("#preload").hide();
 						if(data == 200)
 						{
-							swal({title: "Good job", text: "Data Berhasil Disimpan", type:"success"}).then(function(){ 
-							   	location.reload();
-							   }
-							);
+							// swal({title: "Good job", text: "Data Berhasil Disimpan", type:"success"}).then(function(){ 
+							//    	location.reload();
+							//    }
+							// );
 						}
 					}
 			    })

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use JD\Cloudder\Facades\Cloudder;
-use Faker\Provider\Image;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class UserController extends Controller
 {
@@ -83,12 +83,17 @@ class UserController extends Controller
 
     public function profile_image_change(Request $request)
     {
-        $result_upload = Cloudder::upload($request->file('file')->getPathName());
-        $result = $result_upload->getResult();
+        $image = $request->file('file');
+        $primary = Image::make($image)->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode('jpg');
+        $thumbnail = Image::make($image)->resize(50,50)->encode('jpg');
+        $imageFileName = 'profile-'.rand(0, 100000).time() . '.jpg';
+        $s3 = \Storage::disk('s3');
+        $s3->put('user/profile/'.$imageFileName, $primary->getEncoded());
+        $s3->put('user/profile/thumbnail/'.$imageFileName, $thumbnail->getEncoded());
 
-        $result['secure_url'] = str_replace('""', '', $result['secure_url']);
-
-        $response = get_api_response('user/profile/image/change', 'POST', [], ['image' => $result['secure_url']]);
+        $response = get_api_response('user/profile/image/change', 'POST', [], ['image' => $imageFileName]);
         return response()->json($response->code);
     }
 

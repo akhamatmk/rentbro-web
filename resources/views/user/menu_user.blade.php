@@ -9,7 +9,7 @@
    <div class="row header-sidebar">
       <div class="image-container col-md-4">
          @if(isset($user->image) OR $user->image != null OR $user->image != "")
-            <img src="{{ $user->image }}" class="img-responsive" >
+            <img src="{{ $user->image->thumbnail }}" class="img-responsive" >
          @endIf
       </div>
       <div class="image-container col-md-8">
