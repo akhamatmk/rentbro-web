@@ -16,8 +16,8 @@ class UploadController extends Controller
         $thumbnail = Image::make($request->file('image'))->resize(50,50)->encode('jpg');
         $imageFileName = 'product-'.rand(0, 100000).time() . '.jpg';
     	$s3 = \Storage::disk('s3');
-        $s3->put('product/'.$imageFileName, $primary->getEncoded());
-		$s3->put('product/thumbnail/'.$imageFileName, $thumbnail->getEncoded());
+        $s3->put('product/'.$imageFileName, $primary->getEncoded(), 'public');
+		$s3->put('product/thumbnail/'.$imageFileName, $thumbnail->getEncoded(), 'public');
 
 		return $imageFileName;
     }

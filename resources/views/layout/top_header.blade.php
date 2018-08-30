@@ -11,12 +11,7 @@
 					</div>
 				<div class="top_bar_content ml-auto">
 					<div class="top_bar_user">
-						<div class="top_bar_user">	
-							<div><a href="{{ url('register') }}">Daftar</a></div>	
-						</div>
-						<div class="top_bar_user">	
-							<div><a href="{{ url('login') }}">Masuk</a></div>
-						</div>
+						
 					</div>
 				</div>
 			</div>

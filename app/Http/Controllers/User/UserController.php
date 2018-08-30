@@ -90,8 +90,8 @@ class UserController extends Controller
         $thumbnail = Image::make($image)->resize(50,50)->encode('jpg');
         $imageFileName = 'profile-'.rand(0, 100000).time() . '.jpg';
         $s3 = \Storage::disk('s3');
-        $s3->put('user/profile/'.$imageFileName, $primary->getEncoded());
-        $s3->put('user/profile/thumbnail/'.$imageFileName, $thumbnail->getEncoded());
+        $s3->put('user/profile/'.$imageFileName, $primary->getEncoded(), 'public');
+        $s3->put('user/profile/thumbnail/'.$imageFileName, $thumbnail->getEncoded(), 'public');
 
         $response = get_api_response('user/profile/image/change', 'POST', [], ['image' => $imageFileName]);
         return response()->json($response->code);
@@ -101,6 +101,16 @@ class UserController extends Controller
     {
         $response = get_api_response('user/check/email', 'POST', [], $_POST);
         if($response->code == 200 And $response->data->exist == false)
+            return response()->json(false);
+
+        return response()->json(true);
+    }
+
+    public function check_username(Request $request)
+    {
+        $response = get_api_response('user/check/username', 'POST', [], $_POST);
+        
+        if($response->code != 200)
             return response()->json(false);
 
         return response()->json(true);
