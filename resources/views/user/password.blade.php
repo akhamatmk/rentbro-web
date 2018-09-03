@@ -1,45 +1,54 @@
 @extends('layout.app')
-
 @section('title', 'Profile')
-
 @section('content')
 <div class="super_container">
-	
-  	<header class="header">
-    	@include('layout.top_header')
-    	@include('layout.header', ['noCategory' => "yes"])
-  	</header>
+   <header class="header">
+      @include('layout.top_header')
+      @include('layout.header', ['noCategory' => "yes"])
+   </header>
+   <div class="user-content">
+      <div class="container">
+         <div class="row" style="min-height: 200px;" >
+            @include('user.menu_user')
+            <div class="col-lg-10 mt-10 user-page__content">
+               <div class="my-account-section" style="padding: 0 30px 20px;">
+                  <div class="my-account-section__header">
+                     <div class="my-account-section__header-left">
+                        <div class="my-account-section__header-title">Password</div>
+                        <div class="my-account-section__header-subtitle">
+                           Untuk keamanan akun Anda, mohon untuk tidak menyebarkan password Anda ke orang lain.
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row container_content mt-10">
+                  	<div class="col-md-6">
+	                     <form action="{{ url('change/password') }}" method="post">
+	                        <div class="form-group">
+	                           <label for="exampleInputPassword1">Password Lama</label>
+	                           <input type="password" class="form-control" id="old_password" name="old_password" placeholder="Password">
+	                        </div>
 
-  	<div class="user-content">
-  		<div class="container">
-	  		<div class="row" style="min-height: 200px;" >
+	                        <div class="form-group">
+	                           <label for="exampleInputPassword1">Password Baru</label>
+	                           <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Password">
+	                        </div>
 
-		  		@include('user.menu_user')
-
-		  		<div class="col-lg-10 mt-10 user-page__content">
-					<div class="my-account-section" style="padding: 0 30px 20px;">
-						
-						<div class="my-account-section__header">
-							<div class="my-account-section__header-left">								
-								<div class="my-account-section__header-title">Password</div>
-								<div class="my-account-section__header-subtitle">
-									Untuk keamanan akun Anda, mohon untuk tidak menyebarkan password Anda ke orang lain.
-								</div>
-							</div>
-						</div>
-						
-					</div>
-		  		</div>
-		  	</div>	
-	  	</div>	
-  	</div>
+	                        <div class="form-group">
+	                           <label for="exampleInputPassword1">Validasi Password</label>
+	                           <input type="password" class="form-control" id="repeat_old_password" name="repeat_old_password" placeholder="Password">
+	                        </div>
+	                        <button type="submit" class="btn btn-primary">Submit</button>
+	                     </form>
+	                </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 </div>
-
 @include('layout.copyright')
-
 @endsection
 @section('footer-script')
-	<script type="text/javascript">
-		
-	</script>
+<script type="text/javascript"></script>
 @endsection

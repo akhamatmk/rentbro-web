@@ -18,6 +18,33 @@ class UserController extends Controller
                     ->with('active', 'profile');
     }
 
+    public function delete_address($id)
+    {
+        $response = get_api_response('user/address/'.$id, 'DELETE');
+        return response()->json(true);
+    }
+
+    public function edit_address($id, Request $request)
+    {
+        $data['province'] = $request->province;
+        $data['regency'] = $request->regency;
+        $data['district'] = $request->district;
+        $data['name'] = $request->name;
+        $data['phone'] = $request->phone;
+        $data['postal_code'] = $request->postal_code;
+        $data['full_address'] = $request->full_address;
+        $data['primary'] = $request->primary;
+
+        $response = get_api_response('user/address/'.$id, 'PUT', [], $data);
+        return response()->json($response->code);
+    }
+
+    public function detail_address($id)
+    {
+        $response = get_api_response('user/address/'.$id);
+        return response()->json($response);
+    }
+
     public function address()
     {
         $response = get_api_response('user/info');

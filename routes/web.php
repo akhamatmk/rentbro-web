@@ -50,11 +50,12 @@ Route::get('profile/edit')->uses('User\UserController@profile_edit')->name('prof
 Route::get('user/menu')->uses('User\UserController@top_menu');
 
 Route::get('category/ajax')->uses('User\ShopController@category');
-
 Route::post('upload/image')->uses('UploadController@imageUpload');
-
 Route::get('account')->uses('User\UserController@profile')->middleware('with.auth');
 Route::get('account/address')->uses('User\UserController@address')->middleware('with.auth');
+Route::get('account/address/{id}')->uses('User\UserController@detail_address')->middleware('with.auth');
+Route::put('account/address/{id}')->uses('User\UserController@edit_address')->middleware('with.auth');
+Route::delete('account/address/{id}')->uses('User\UserController@delete_address')->middleware('with.auth');
 Route::get('account/change_password')->uses('User\UserController@change_password')->middleware('with.auth');
 Route::post('profile/address/add')->uses('User\UserController@address_store')->middleware('with.auth');
 
