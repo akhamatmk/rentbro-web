@@ -94,7 +94,7 @@
 							</div>
 						</div>
 						
-						<div class="row container_content mt-10">							
+						<div class="row container_content mt-10">
 							@foreach($address as $key => $value)
 								<div class="col-md-9">
 									<div class="row">

@@ -21,25 +21,44 @@
                      </div>
                   </div>
                   <div class="row container_content mt-10">
-                  	<div class="col-md-6">
-	                     <form action="{{ url('change/password') }}" method="post">
-	                        <div class="form-group">
-	                           <label for="exampleInputPassword1">Password Lama</label>
-	                           <input type="password" class="form-control" id="old_password" name="old_password" placeholder="Password">
-	                        </div>
+                     <div class="col-md-6">
+                        <form data-toggle="validator" role="form" action="{{ url('account/change/password') }}" method="post">
+                           <div class="form-group">
+                              <label for="inputPassword" class="control-label">Password Lama</label>
+                              <div class="form-inline row">
+                                 <div class="form-group col-sm-8">
+                                    <input type="password" data-required-error="Harus diisi"  class="form-control" id="old_password" name="old_password" placeholder="Password" required>
+                                    <div class="help-block with-errors"></div>
+                                 </div>
+                              </div>
+                           </div>
 
-	                        <div class="form-group">
-	                           <label for="exampleInputPassword1">Password Baru</label>
-	                           <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Password">
-	                        </div>
+                           <div class="form-group">
+                              <label for="inputPassword" class="control-label">Password Baru</label>
+                              <div class="form-inline row">
+                                 <div class="form-group col-sm-8">
+                                    <input type="password" data-minlength="6" data-minlength-error="Minimal 6 character"  data-required-error="Harus diisi"  class="form-control" id="inputPassword" placeholder="Password" required>
+                                    <div class="help-block with-errors"></div>
+                                 </div>
+                              </div>
+                           </div>
 
-	                        <div class="form-group">
-	                           <label for="exampleInputPassword1">Validasi Password</label>
-	                           <input type="password" class="form-control" id="repeat_old_password" name="repeat_old_password" placeholder="Password">
-	                        </div>
-	                        <button type="submit" class="btn btn-primary">Submit</button>
-	                     </form>
-	                </div>
+                           <div class="form-group">
+                              <label for="inputPassword" class="control-label">Ulangi Password baru</label>
+                              <div class="form-inline row">
+                                 <div class="form-group col-sm-8">
+                                    <input type="password" class="form-control" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Password Tidak sama" data-required-error="Harus diisi" placeholder="Confirm" required><br/>
+                                    <div class="help-block with-errors"></div>
+                                 </div>
+                              </div>
+                           </div>
+                           
+                           <div class="form-group">
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                           </div>
+                        
+                        </form>
+                     </div>
                   </div>
                </div>
             </div>
@@ -50,5 +69,9 @@
 @include('layout.copyright')
 @endsection
 @section('footer-script')
-<script type="text/javascript"></script>
+<script type="text/javascript">
+   $( document ).ready(function() {
+      $('#myForm').validator();
+   });
+</script>
 @endsection
