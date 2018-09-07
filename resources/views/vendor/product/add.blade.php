@@ -45,10 +45,10 @@
     	@include('layout.header', ['noCategory' => "yes"])
   	</header>
 
-  	<div style="background: #F8F8F8; margin-top: -20px">
-  		<div class="container" style="margin-top: 20px">
+  	<div class="container-add-product">
+  		<div class="container mt-20">
 	  		<div class="row" style="min-height: 400px;" >
-		  		<div class="col-lg-10" style="min-height: 100px;  border: 1px solid #e0e0e0; background: white; margin-left: 10px;     margin-bottom: 10px; margin-top: 20px">
+		  		<div class="col-lg-10 container-body-add-proudct">
 
 		  			@if(Session::has('message-success'))
 			  			<div class="alert alert-success alert_box" role="alert" style="margin-top: 10px">
@@ -58,14 +58,14 @@
 
 		  			<h3 style="text-align: center; margin-top: 10px">Tambah Barang</h3>
 
-		  			<form style="margin-top: 10px" method="post" action="{{ url($vendor->id.'/product-add') }}">
+		  			<form class="mt-10" method="post" action="{{ url($vendor->id.'/product-add') }}">
 
 			  			@csrf
 			  			<input type="hidden" name="nickname" value="{{ $vendor->nickname }}">
 	  					<div class="form-group row">
 						    <label class="control-label col-sm-2" for="min_order">Nama Barang</label>
 						    <div class="col-sm-6">
-						    	<input style="margin-left: 10px" type="text" name="name" class="form-control">
+						    	<input type="text" name="name" class="form-control ml-10">
 						    </div>
 						</div>
 
@@ -80,7 +80,7 @@
 						    </div>
 
 						    <div class="col-sm-9 offset-sm-2">					      
-								<small style="margin-left: 20px">
+								<small class="ml-20">
 									Catalog anda tidak ada coba <a href="{{ url('recomendation/catalog/add') }}">klik</a> disini untuk membantu kami membuat catalog semakin bevariasi dan dan dapatkan point
 								</small>
 						    </div>						    
@@ -100,21 +100,21 @@
 						<div class="form-group row">
 						    <label class="control-label col-sm-2" for="min_order">Gambar Lainya :</label>
 						    <div class="col-sm-9">
-						    	<div style="margin-left: 10px" id="dropzone" class="dropzone"></div>
+						    	<div id="dropzone" class="dropzone ml-10"></div>
 						    </div>
 						</div>
 
 						<div class="form-group row">
 						   <label class="control-label col-sm-2" for="quantity">Jumlah Barang</label>
 						   <div class="col-sm-6">
-								<input style="margin-left: 10px" type="text" name="quantity" id="quantity" class="form-control">
+								<input type="text" name="quantity" id="quantity" class="form-control ml-10">
 						   </div>
 						</div>
 
 						<div class="form-group row">
 						   <label class="control-label col-sm-2" for="min_order">Berat Barang</label>
 						   <div class="col-sm-6">
-								<input style="margin-left: 10px" type="number" min="0" name="weight" id="weight" class="form-control">
+								<input type="number" min="0" name="weight" id="weight" class="form-control ml-10">
 						   </div>
 						</div>					
 

@@ -3118,6 +3118,12 @@
  .ml-15{
      margin-left: 15px;
 }
+
+}
+ .ml-20{
+     margin-left: 20px;
+}
+
  .btn-light:active, .btn-light:hover {
      background: rgba(0,0,0,.02);
 }
@@ -3227,4 +3233,12 @@
 }
  .help-block .list-unstyled {
      color : #a94442;
+}
+
+.container-add-product {
+     background: #F8F8F8; margin-top: -20px
+}
+
+.container-body-add-proudct{
+     min-height: 100px;  border: 1px solid #e0e0e0; background: white; margin-left: 10px;  margin-bottom: 10px; margin-top: 20px
 }
