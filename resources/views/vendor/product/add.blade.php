@@ -5,33 +5,12 @@
 @section('content')
 
 <style type="text/css">
-	.user-sider li a {
-	    padding: 10px 0 15px 18px;
-	    display: block;
-	    font-weight: bold;
-	    color: #000;
-	}
-
+	
 	.select2-selection{
 		margin-left: 10px;
 	}
-
-	.user-sider li {
-	    border-top: 1px solid #f5f5f5;
-	    border-bottom: 1px solid #f5f5f5;
-	}
-
-	._menu_list li a:hover {
-		color: #a71616;
-	    text-decoration: none;
-	    outline: 0;
-	}
-
-	.active-sidebar{
-		background: #ffae2e;
-		color: #fff;
-	}
-
+	
+	
 	.select2-selection{
 	    height: 50px;
 	    padding-left: 25px;
@@ -53,10 +32,6 @@
 	    height: 50px;
 	}
 
-	.presentation{
-	    margin-top: 10px !important;
-	}
-
 	@media only screen and (max-width: 768px) {
 	    .child_category {
 	    	margin-top: 10px;
@@ -70,11 +45,10 @@
     	@include('layout.header', ['noCategory' => "yes"])
   	</header>
 
-  	<div style="background: #F8F8F8; margin-top: -10px">
+  	<div style="background: #F8F8F8; margin-top: -20px">
   		<div class="container" style="margin-top: 20px">
 	  		<div class="row" style="min-height: 400px;" >
-
-		  		<div class="col-lg-10" style="min-height: 100px;  border: 1px solid #e0e0e0; background: white; margin-left: 10px;     margin-bottom: 10px;">
+		  		<div class="col-lg-10" style="min-height: 100px;  border: 1px solid #e0e0e0; background: white; margin-left: 10px;     margin-bottom: 10px; margin-top: 20px">
 
 		  			@if(Session::has('message-success'))
 			  			<div class="alert alert-success alert_box" role="alert" style="margin-top: 10px">
@@ -93,20 +67,6 @@
 						    <div class="col-sm-6">
 						    	<input style="margin-left: 10px" type="text" name="name" class="form-control">
 						    </div>
-						</div>	
-
-					  	<div class="form-group row">
-						    <label for="colFormLabel" class="col-sm-2 col-form-label">Category</label>
-						    <div class="col-sm-3">					      
-						      <select class="form-control" id="category" name="category"></select>
-						    </div>
-
-						    <div class="col-sm-3 child_category">					      
-						      <select class="form-control" id="category2" name="category2"></select>
-						    </div>
-
-						    
-
 						</div>
 
 						<div class="form-group row">
@@ -126,6 +86,17 @@
 						    </div>						    
 						</div>
 
+					  	<div class="form-group row">
+						    <label for="colFormLabel" class="col-sm-2 col-form-label">Category</label>
+						    <div class="col-sm-3">					      
+						      <select class="form-control" id="category" name="category"></select>
+						    </div>
+
+						    <div class="col-sm-3 child_category">					      
+						      <select class="form-control" id="category2" name="category2"></select>
+						    </div>						    
+						</div>
+						
 						<div class="form-group row">
 						    <label class="control-label col-sm-2" for="min_order">Gambar Lainya :</label>
 						    <div class="col-sm-9">

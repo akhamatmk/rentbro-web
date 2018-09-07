@@ -67,7 +67,7 @@
     <script src="{{ asset('plugins/OwlCarousel2-2.2.1/owl.carousel.js') }}"></script>
     <script src="{{ asset('plugins/slick-1.8.0/slick.js') }}"></script>
     <script src="{{ asset('plugins/easing/easing.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ asset('js/custom.js?v=1') }}"></script>
     <script src="{{ asset('js/jquery.validate.js') }}"></script>
     <script src="{{ asset('js/dropzone.js') }}"></script>
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
@@ -76,6 +76,8 @@
     <script src="{{ asset('js/jquery.validate.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
     
     <script type="text/javascript">
         Dropzone.autoDiscover = false;        
