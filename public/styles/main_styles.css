@@ -3228,3 +3228,16 @@
  .help-block .list-unstyled {
      color : #a94442;
 }
+
+.container-content-add{
+     background: #F8F8F8; margin-top: -20px
+}
+
+
+.body-add-product{
+     min-height: 100px;  border: 1px solid #e0e0e0; background: white; margin-left: 10px;     margin-bottom: 10px; margin-top: 20px
+}
+
+.header-container-add-product{
+     text-align: center; margin-top: 10px
+}

@@ -45,10 +45,10 @@
     	@include('layout.header', ['noCategory' => "yes"])
   	</header>
 
-  	<div style="background: #F8F8F8; margin-top: -20px">
-  		<div class="container" style="margin-top: 20px">
+  	<div class="container-content-add">
+  		<div class="container" class="mt-20">
 	  		<div class="row" style="min-height: 400px;" >
-		  		<div class="col-lg-10" style="min-height: 100px;  border: 1px solid #e0e0e0; background: white; margin-left: 10px;     margin-bottom: 10px; margin-top: 20px">
+		  		<div class="col-lg-10 body-add-product">
 
 		  			@if(Session::has('message-success'))
 			  			<div class="alert alert-success alert_box" role="alert" style="margin-top: 10px">
@@ -56,16 +56,16 @@
 						</div>
 					@endIf
 
-		  			<h3 style="text-align: center; margin-top: 10px">Tambah Barang</h3>
+		  			<h3 class="header-container-add-product">Tambah Barang</h3>
 
-		  			<form style="margin-top: 10px" method="post" action="{{ url($vendor->id.'/product-add') }}">
+		  			<form class="mt-10" method="post" action="{{ url($vendor->id.'/product-add') }}">
 
 			  			@csrf
 			  			<input type="hidden" name="nickname" value="{{ $vendor->nickname }}">
 	  					<div class="form-group row">
 						    <label class="control-label col-sm-2" for="min_order">Nama Barang</label>
 						    <div class="col-sm-6">
-						    	<input style="margin-left: 10px" type="text" name="name" class="form-control">
+						    	<input type="text" name="name" class="form-control ml-10">
 						    </div>
 						</div>
 
@@ -73,6 +73,7 @@
 						    <label for="catalogue" class="col-sm-2 col-form-label">Cataloge</label>
 						    <div class="col-sm-3">					      
 						      	<select class="form-control" id="catalogue" name="catalogue">
+						      		<option data-weight="0" value="0">-- Silahkan Pilih --</option>
 						      		@foreach($catalogue as $key => $value)
 						      			<option data-weight="{{ $value->weight }}" value="{{ $value->id }}">{{ $value->name }}</option>
 						      		@endForeach
@@ -80,15 +81,15 @@
 						    </div>
 
 						    <div class="col-sm-9 offset-sm-2">					      
-								<small style="margin-left: 20px">
+								<small class="ml-20">
 									Catalog anda tidak ada coba <a href="{{ url('recomendation/catalog/add') }}">klik</a> disini untuk membantu kami membuat catalog semakin bevariasi dan dan dapatkan point
 								</small>
 						    </div>						    
 						</div>
 
-					  	<div class="form-group row">
+					  	<div class="form-group row" id="self_category">
 						    <label for="colFormLabel" class="col-sm-2 col-form-label">Category</label>
-						    <div class="col-sm-3">					      
+						    <div class="col-sm-3">
 						      <select class="form-control" id="category" name="category"></select>
 						    </div>
 
@@ -96,25 +97,29 @@
 						      <select class="form-control" id="category2" name="category2"></select>
 						    </div>						    
 						</div>
+
+						<div class="form-group row" id="catalog_category">
+														
+						</div>
 						
 						<div class="form-group row">
 						    <label class="control-label col-sm-2" for="min_order">Gambar Lainya :</label>
 						    <div class="col-sm-9">
-						    	<div style="margin-left: 10px" id="dropzone" class="dropzone"></div>
+						    	<div id="dropzone" class="dropzone ml-10"></div>
 						    </div>
 						</div>
 
 						<div class="form-group row">
 						   <label class="control-label col-sm-2" for="quantity">Jumlah Barang</label>
 						   <div class="col-sm-6">
-								<input style="margin-left: 10px" type="text" name="quantity" id="quantity" class="form-control">
+								<input type="text" name="quantity" id="quantity" class="form-control ml-10">
 						   </div>
 						</div>
 
 						<div class="form-group row">
 						   <label class="control-label col-sm-2" for="min_order">Berat Barang</label>
 						   <div class="col-sm-6">
-								<input style="margin-left: 10px" type="number" min="0" name="weight" id="weight" class="form-control">
+								<input type="number" min="0" name="weight" id="weight" class="form-control ml-10">
 						   </div>
 						</div>					
 
@@ -189,9 +194,10 @@
 @endsection
 @section('footer-script')
 	<script type="text/javascript">
-		var category ;
-		var price_type_input = '@foreach($price_type as $key => $value) <option value="{{ $key }}">{{ $value }}</option> @endForeach';
-		var count = 1;
+		let category ;
+		let price_type_input = '@foreach($price_type as $key => $value) <option value="{{ $key }}">{{ $value }}</option> @endForeach';
+		let count = 1;
+		let attr;
 
 		function delete_price (id) {		   		
 			$("#body_price_"+id).remove();
@@ -201,6 +207,40 @@
 			$("#category").select2();
 			$("#category2").select2();
 			$("#catalogue").select2();
+
+			$("#catalogue").change(function(){
+				const id = $(this).val();
+				if (id != 0) {
+					$("#self_category").hide();
+					$.ajax({
+						type: "POST",
+						url: "{{ url('catalog') }}/"+$(this).val(),
+						data : { "_token": "{{ csrf_token() }}" },
+						dataType: 'json',
+						success: function(data){
+							let container_catalog_category = '<label for="catalogue" class="col-sm-2 col-form-label">Cataloge Category</label>';
+
+							container_catalog_category+= '<div class="col-sm-8 mt-10 ml-10">';
+							$.each( data.catalogueCategory, function( key, value ) {
+								if(key != 0)
+									attr = ", ";
+								else
+									attr = " ";
+
+								container_catalog_category+= attr+' '+value.category;
+							});
+
+							container_catalog_category+= '</div>';
+
+							$("#catalog_category").html(container_catalog_category);
+						}
+					});	
+				}else{
+					$("#self_category").show();
+					$("#catalog_category").html("");
+				}
+				
+			});
 		   	
 		   	$.ajax({
 				type: "GET",
@@ -217,7 +257,6 @@
 					$("#category3").hide();
 				}
 			});
-
 
 			$("#category").change(function(){
 				var id = $(this).val();
