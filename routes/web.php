@@ -76,3 +76,5 @@ Route::group(['prefix' => 'vendor', 'middleware' => ['with.auth']], function(){
 
 	Route::get('{nickname}/profile')->uses('User\VendorController@profile');
 });
+
+Route::post('catalog/{id}')->uses('CatalogController@show_ajax');
