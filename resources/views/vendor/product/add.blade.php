@@ -106,8 +106,84 @@
 						    	<div id="dropzone" class="dropzone ml-10"></div>
 						    </div>
 						</div>
+						
+						<div id="product-image">
+							
+						</div>						
 
-						<div class="form-group row">
+					</form>
+		  		</div>
+		  	</div>	
+	  	</div>	
+  	</div>
+
+
+  	<div class="container-add-product">
+  		<div class="container">
+	  		<div class="row">
+		  		<div class="col-lg-10 container-body-add-proudct">		  			
+		  			<h3 class="header-container-add-product">Detail Produk Dan Term condition</h3>
+		  		</div>
+		  	</div>
+		</div>
+	</div>
+
+  	<div class="container-add-product">
+  		<div class="container">
+	  		<div class="row">
+		  		<div class="col-lg-10 container-body-add-proudct">		  			
+		  			<h3 class="header-container-add-product">Set Harga Barang <button type="button" style="cursor: pointer;" class="btn btn-primary" id="tambah-harga">Add price</button></h3>
+		  			
+					<div id="priceInputLoad" class="form-group row"  >	  					
+	  					
+	  					<div class="price-input col-sm-6" id="price-input-0">
+	  						<div class="container-price">
+	  							<div class="body-price"><br/><br/>
+	  								<select class="form-control mt-10" name="price_type[]">
+			    						@foreach($price_type as $key => $value)
+			    							<option value="{{ $key }}">{{ $value }}</option>
+			    						@endForeach
+							    	</select>
+									<input type="number" placeholder="Lama Peminjaman" name="amount[]" class="form-control mt-10">
+									<input type="text" placeholder="Harga" name="price[]" class="form-control mt-10 format-nominal">
+	  							</div>
+	  						</div>
+	  					</div>
+
+	  					<div class="price-input col-sm-6" id="price-input-1">
+	  						<div class="container-price">
+	  							<div class="body-price"><br/><br/>
+	  								<select class="form-control mt-10" name="price_type[]">
+			    						@foreach($price_type as $key => $value)
+			    							<option value="{{ $key }}">{{ $value }}</option>
+			    						@endForeach
+							    	</select>
+									<input type="number" placeholder="Lama Peminjaman" name="amount[]" class="form-control mt-10">
+									<input type="text" placeholder="Harga" name="price[]" class="form-control mt-10 format-nominal">
+	  							</div>
+	  						</div>
+	  					</div>
+
+					</div>
+
+					<div class="form-group row">
+					   <label class="control-label col-sm-2" for="min_order">Minimal Deposit</label>
+					   <div class="col-sm-4">
+					    	<input type="text" class="form-control format-nominal" name="minimum_deposit" id="minimum_deposit" value="0">
+					   </div>
+					</div>
+		  		</div>
+		  	</div>
+		</div>
+	</div>
+
+	<div class="container-add-product">
+  		<div class="container">
+	  		<div class="row">
+		  		<div class="col-lg-10 container-body-add-proudct">		  			
+		  			<h3 class="header-container-add-product">Detail Produk Dan Term condition</h3>
+
+		  			<div class="form-group row">
 						   <label class="control-label col-sm-2" for="quantity">Jumlah Barang</label>
 						   <div class="col-sm-6">
 								<input type="text" name="quantity" id="quantity" class="form-control ml-10">
@@ -119,37 +195,6 @@
 						   <div class="col-sm-6">
 								<input type="number" min="0" name="weight" id="weight" class="form-control ml-10">
 						   </div>
-						</div>					
-
-						<div class="form-group row">
-						    <label class="control-label col-sm-2">Harga Barang</label>
-						    <div class="col-sm-10">
-						    	<table class="table">
-						    		<thead>
-						    			<tr>
-						    				<th>Jenis Sewa</th>
-						    				<th>Jumlah (Hari / Minggu / Bulan)</th>
-						    				<th>Harga</th>
-						    				<th>
-						    					<img id="add_price" style="cursor: pointer;" width="20px" src="{{ asset('images/plus.png') }}">
-						    				</th>
-						    			</tr>
-						    		</thead>
-						    		<tbody id="body_price">
-						    			<tr>
-						    				<td>
-						    					<select class="form-control" name="price_type[]">
-						    						@foreach($price_type as $key => $value)
-						    							<option value="{{ $key }}">{{ $value }}</option>
-						    						@endForeach
-										    	</select>
-						    				</td>
-						    				<td><input type="number" name="amount[]" class="form-control"></td>
-						    				<td><input type="number" name="price[]" class="form-control"></td>
-						    			</tr>
-						    		</tbody>
-						    	</table>
-						    </div>
 						</div>
 
 						<div class="form-group row">
@@ -160,8 +205,8 @@
 						</div>
 
 						<div class="form-group row">
-						    <label class="control-label col-sm-2" for="min_order">Dokumen yang harus dilengkapi</label>
-						    <div class="col-sm-10">
+						   <label class="control-label col-sm-2" for="min_order">Dokumen yang harus dilengkapi</label>
+						   <div class="col-sm-10">
 						    	<div class="checkbox">
 								  <label><input type="checkbox" value="">KTP</label>
 								</div>
@@ -174,43 +219,9 @@
 						    </div>
 						</div>
 
-						<div id="product-image">
-							
-						</div>
 						<div class="col-auto" style="float: right;">
-					      <button type="submit" class="btn btn-primary mb-2">Add</button>
-					    </div>
-					</form>
-		  		</div>
-		  	</div>	
-	  	</div>	
-  	</div>
-
-  	<div class="container-add-product">
-  		<div class="container">
-	  		<div class="row">
-		  		<div class="col-lg-10 container-body-add-proudct">		  			
-		  			<h3 class="header-container-add-product">Set Harga Barang <button type="button" class="btn btn-primary" id="tambah-harga">Add price</button></h3>
-		  			
-					<div id="priceInputLoad" class="form-group row" style="justify-content: center" >
-	  					
-	  					<div class="price-input col-sm-3" id="price-input-0">
-	  						<div class="container-price">
-	  							<div class="body-price">
-	  								<button type="button" data-id="0" class="btn delete-price"> X </button>
-	  								<div class="clearfix"></div>
-	  								<select class="form-control mt-10" name="price_type[]">
-			    						@foreach($price_type as $key => $value)
-			    							<option value="{{ $key }}">{{ $value }}</option>
-			    						@endForeach
-							    	</select>
-									<input type="number" name="amount[]" class="form-control mt-10">
-									<input type="number" name="price[]" class="form-control mt-10">
-	  							</div>
-	  						</div>
-	  					</div>
-					
-					</div>
+					      <button type="submit" class="btn btn-primary mb-2">Simpan </button>
+					   </div>
 
 		  		</div>
 		  	</div>
@@ -224,13 +235,13 @@
 	<script type="text/javascript">
 		let category ;
 		let price_type_input = '@foreach($price_type as $key => $value) <option value="{{ $key }}">{{ $value }}</option> @endForeach';
-		let count = 1;
 		let attr;
-		let price_id = 1;
+		let price_id = 2;
+		
+		function changeClass()
+		{
 
-		function delete_price (id) {		   		
-			$("#body_price_"+id).remove();
-	   	}
+		}
 
 		$(function() {
 			$("#category").select2();
@@ -238,15 +249,22 @@
 			$("#catalogue").select2();
 
 			$("#tambah-harga").click(function(){
-				let price_content = '<div class="price-input col-sm-3" id="price-input-'+price_id+'"> <div class="container-price"><div class="body-price"><button type="button" data-id="'+ price_id +'" class="btn delete-price"> X </button> <div class="clearfix"></div><select class="form-control mt-10" name="price_type[]">'+ price_type_input +'</select><input type="number" name="amount[]" class="form-control mt-10"><input type="number" name="price[]" class="form-control mt-10"></div></div></div>';
+				let price_content = '<div class="price-input col-sm-6" id="price-input-'+price_id+'"> <div class="container-price"><div class="body-price"><a data-id="'+ price_id +'" class="btn btn-danger delete-price"> X </a><select class="form-control mt-10" name="price_type[]">'+ price_type_input +'</select><input type="number" name="amount[]" placeholder="Lama Peminjaman" class="form-control mt-10"><input type="text" placeholder="Harga" name="price[]" class="form-control mt-10 format-nominal"></div></div></div>';
 
 			  	$('#priceInputLoad').append(price_content);
-		   	price_id++;
+
+			  	$(".delete-price").click(function(){
+					var id = $(this).data('id');
+					$("#price-input-"+id).remove();
+				});
+
+				$(".format-nominal").maskMoney({thousands:'.', decimal:',', allowZero: true, precision: 0});
+				
+		   		price_id++;
 			});
 
 			$(".delete-price").click(function(){
 				var id = $(this).data('id');
-				alert(1);
 				$("#price-input-"+id).remove();
 			});
 
@@ -346,14 +364,10 @@
 		   	$("#catalogue").change(function(){
 		   		$("#weight").val($(this).find(':selected').data('weight'));
 		   	});
-		   	
-		   	$("#add_price").click(function(){
-		   		var new_tr = '<tr id="body_price_'+count+'"><td><select class="form-control" name="price_type['+count+']">'+price_type_input+'</select></td><td><input type="number" name="amount[]" class="form-control"></td><td><input type="number" name="price[]" class="form-control"></td><td><img onclick="delete_price('+count+')" class="delete_price" style="cursor : pointer" src="{{ asset('images/minus.png') }}" width= "40px" > </td></tr>';
-		   		$("#body_price").append(new_tr);
-		   		count++;
-		   	});		  	        
-
+		   			   
 	        $('#price').maskMoney({thousands:'.', decimal:',', allowZero: true, precision: 0});
+
+	        $(".format-nominal").maskMoney({thousands:'.', decimal:',', allowZero: true, precision: 0});
 
 	        CKEDITOR.replace( 'description' );
 
