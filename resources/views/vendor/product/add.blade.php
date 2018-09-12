@@ -181,11 +181,41 @@
 					      <button type="submit" class="btn btn-primary mb-2">Add</button>
 					    </div>
 					</form>
-
 		  		</div>
 		  	</div>	
 	  	</div>	
   	</div>
+
+  	<div class="container-add-product">
+  		<div class="container">
+	  		<div class="row">
+		  		<div class="col-lg-10 container-body-add-proudct">		  			
+		  			<h3 class="header-container-add-product">Set Harga Barang <button type="button" class="btn btn-primary" id="tambah-harga">Add price</button></h3>
+		  			
+					<div id="priceInputLoad" class="form-group row" style="justify-content: center" >
+	  					
+	  					<div class="price-input col-sm-3" id="price-input-0">
+	  						<div class="container-price">
+	  							<div class="body-price">
+	  								<button type="button" data-id="0" class="btn delete-price"> X </button>
+	  								<div class="clearfix"></div>
+	  								<select class="form-control mt-10" name="price_type[]">
+			    						@foreach($price_type as $key => $value)
+			    							<option value="{{ $key }}">{{ $value }}</option>
+			    						@endForeach
+							    	</select>
+									<input type="number" name="amount[]" class="form-control mt-10">
+									<input type="number" name="price[]" class="form-control mt-10">
+	  							</div>
+	  						</div>
+	  					</div>
+					
+					</div>
+
+		  		</div>
+		  	</div>
+		</div>
+	</div>
   	
   	@include('layout.copyright')
 
@@ -196,6 +226,7 @@
 		let price_type_input = '@foreach($price_type as $key => $value) <option value="{{ $key }}">{{ $value }}</option> @endForeach';
 		let count = 1;
 		let attr;
+		let price_id = 1;
 
 		function delete_price (id) {		   		
 			$("#body_price_"+id).remove();
@@ -205,6 +236,19 @@
 			$("#category").select2();
 			$("#category2").select2();
 			$("#catalogue").select2();
+
+			$("#tambah-harga").click(function(){
+				let price_content = '<div class="price-input col-sm-3" id="price-input-'+price_id+'"> <div class="container-price"><div class="body-price"><button type="button" data-id="'+ price_id +'" class="btn delete-price"> X </button> <div class="clearfix"></div><select class="form-control mt-10" name="price_type[]">'+ price_type_input +'</select><input type="number" name="amount[]" class="form-control mt-10"><input type="number" name="price[]" class="form-control mt-10"></div></div></div>';
+
+			  	$('#priceInputLoad').append(price_content);
+		   	price_id++;
+			});
+
+			$(".delete-price").click(function(){
+				var id = $(this).data('id');
+				alert(1);
+				$("#price-input-"+id).remove();
+			});
 
 			$("#catalogue").change(function(){
 				const id = $(this).val();
@@ -240,7 +284,7 @@
 				
 			});
 		   	
-		   	$.ajax({
+		   $.ajax({
 				type: "GET",
 				url: "{{ url('category/ajax') }}",
 				dataType: 'json',
@@ -307,7 +351,6 @@
 		   		var new_tr = '<tr id="body_price_'+count+'"><td><select class="form-control" name="price_type['+count+']">'+price_type_input+'</select></td><td><input type="number" name="amount[]" class="form-control"></td><td><input type="number" name="price[]" class="form-control"></td><td><img onclick="delete_price('+count+')" class="delete_price" style="cursor : pointer" src="{{ asset('images/minus.png') }}" width= "40px" > </td></tr>';
 		   		$("#body_price").append(new_tr);
 		   		count++;
-
 		   	});		  	        
 
 	        $('#price').maskMoney({thousands:'.', decimal:',', allowZero: true, precision: 0});

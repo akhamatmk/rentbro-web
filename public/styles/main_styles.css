@@ -563,7 +563,6 @@
      display: inline;
      border: 0;
      width: auto;
-     margin-left: 10px;
      outline: none;
      -webkit-appearance: none;
      -moz-appearance: none;
@@ -3254,4 +3253,16 @@
 
 .header-container-add-product{
      text-align: center; margin-top: 10px
+}
+
+.container-price{
+     margin-bottom: 10px; border: 1px solid
+}
+
+.body-price{
+     padding: 10px
+}
+
+.delete-price{
+     float: right; background: #fff; cursor: pointer;
 }
