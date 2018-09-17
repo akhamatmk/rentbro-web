@@ -3042,6 +3042,9 @@
  .input_field{
      width: 100% !important;
 }
+.mb-10{
+     margin-bottom: 10px 
+}
  .mb-30{
      margin-bottom: 30px 
 }

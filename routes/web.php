@@ -22,6 +22,8 @@ Route::get('/home', function () {
 Route::get('place/regency', 'PlaceController@regency');
 Route::get('place/district', 'PlaceController@district');
 
+Route::post('product/option/multiple', 'ProductOptionController@multiple');
+
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
@@ -39,7 +41,7 @@ Route::post('register/by_email')->uses('Auth\LoginController@registerEmailPost')
 
 Route::get('{vendor}/product-add')->uses('Vendor\ProductController@add')->name('product-add')->middleware('with.auth');
 
-Route::post('{vendor_id}/product-add')->uses('Vendor\ProductController@store')->name('product-add-store');
+Route::post('{nickname}/product-add')->uses('Vendor\ProductController@store')->name('product-add-store');
 
 Route::get('profile')->uses('User\UserController@profile')->name('profile')->middleware('with.auth');
 Route::post('profile/edit')->uses('User\UserController@profile_edit_store')->name('profile-edit')->middleware('with.auth');

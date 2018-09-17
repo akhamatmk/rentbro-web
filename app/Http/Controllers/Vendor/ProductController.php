@@ -15,18 +15,32 @@ class ProductController extends Controller
 
         $response = get_api_response('user/info');
         $catalogue = get_api_response('catalogue');
-        $price_type = ['Harian', 'Mingguan', 'Bulanan']; 
+        $productOptpion = get_api_response('product/option');
+        $price_type = ['Harian', 'Mingguan', 'Bulanan'];
     	return view('vendor/product/add')
                 ->with('user', $response->data)
                 ->with('vendor', $vendor->data)
                 ->with('menu', 'add product')
+                ->with('product_option', $productOptpion->data)
                 ->with('price_type', $price_type)
                 ->with('catalogue', $catalogue->data);
     }
 
-    public function store($vendor_id)
-    {
-    	$response = get_api_response('vendor/'.$vendor_id.'/product/store', 'POST', [], $_POST);
+    public function store($nickname)
+    {        
+        $option_value = [];
+        if(isset($_POST['value']) AND count($_POST['value']) > 0)
+        {
+            foreach ($_POST['value'] as $key => $value) {
+                $temp = explode("_", $value);
+                $option_value[$temp[0]][] = $temp[1];
+            }
+        }
+
+        $_POST['option_value'] = $option_value;
+        
+    	$response = get_api_response('vendor/'.$nickname.'/product/store', 'POST', [], $_POST);
+        dd($response);
         if($response->code == 200)
             Session::flash('message-success', 'Sukses');
         else
