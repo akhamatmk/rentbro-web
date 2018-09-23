@@ -28,8 +28,6 @@
         }
 </style>
 
-  
-
 <script type="text/javascript">
     function ready(callback){
             // in case the document is already rendered

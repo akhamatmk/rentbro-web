@@ -26,7 +26,23 @@ class VendorController extends Controller
 
     public function profile($nickname)
     {
+        $response = get_api_response('user/info');
+        $vendor = get_api_response('vendor/'.$nickname.'/profile');
+        $product = get_api_response('vendor/'.$nickname.'/list_product');
+        if($vendor->code != 200)
+            return redirect('/');
 
+        return view('vendor/detail')
+                    ->with('vendor', $vendor->data)
+                    ->with('user', $response->data)
+                    ->with('product', $product->data)
+                    ->with('menu', 'vendor')
+                    ->with('menu_tab', 'profile')
+                    ->with('active', 'vendor_'.$vendor->data->nickname);
+    }
+
+    public function list_product($nickname)
+    {
         $response = get_api_response('user/info');
         $vendor = get_api_response('vendor/'.$nickname.'/profile');
         if($vendor->code != 200)
@@ -36,6 +52,7 @@ class VendorController extends Controller
                     ->with('vendor', $vendor->data)
                     ->with('user', $response->data)
                     ->with('menu', 'vendor')
+                    ->with('menu_tab', 'list_product')
                     ->with('active', 'vendor_'.$vendor->data->nickname);
     }
 
