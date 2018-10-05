@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47fff0ee21002206641b92ba9f0ac29b",
+    "content-hash": "83448f2e0cf8c202690d47be110cb8d4",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1524,6 +1524,50 @@
                 "random"
             ],
             "time": "2018-07-02T15:55:56+00:00"
+        },
+        {
+            "name": "pewe/laravel-rajaongkir",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/permadiwibisono/laravel-rajaongkir.git",
+                "reference": "a1c113e551fca99a7c9887729d08770a5b109e20"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/permadiwibisono/laravel-rajaongkir/zipball/a1c113e551fca99a7c9887729d08770a5b109e20",
+                "reference": "a1c113e551fca99a7c9887729d08770a5b109e20",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Pewe\\RajaOngkir\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Permadi Wibisono",
+                    "email": "mbapewe@gmail.com"
+                }
+            ],
+            "description": "A wrapper for Raja Ongkir API",
+            "keywords": [
+                "api",
+                "laravel",
+                "lumen",
+                "rajaongkir",
+                "wrapper"
+            ],
+            "time": "2018-03-18T17:44:37+00:00"
         },
         {
             "name": "psr/container",

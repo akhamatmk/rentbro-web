@@ -11,14 +11,22 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('set/newPassword/{code}', 'User\UserController@verify_code_new_password')->middleware('with.auth');
+Route::get('user/make/newPassword')->uses('User\UserController@send_code_new_password')->middleware('with.auth');
+Route::post('make/new/password')->uses('User\UserController@make_new_password')->middleware('with.auth');
 
-Route::get('/home', function () {
-    return view('welcome');
-})->name('home');
+Route::post('account/change/password')->uses('User\UserController@change_password_store')->middleware('with.auth');
 
+
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index');
+
+Route::get('courier', 'ShippingController@courier');
+
+Route::get('shipping/price', 'ShippingController@price');
+Route::get('product/{vendor}/{product}', 'ProductController@detail');
+
+Route::get('place/regency', 'PlaceController@regency');
 Route::get('place/regency', 'PlaceController@regency');
 Route::get('place/district', 'PlaceController@district');
 

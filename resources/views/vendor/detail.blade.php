@@ -16,7 +16,7 @@
                   <div class="my-account-section__header">
                      <div class="my-account-section__header-left">
                         <div class="my-account-section__header-title">
-                           <img src="{{ $vendor->logo }}" width="100px" height="50px" style="border-radius: 50%">
+                           <img src="{{ $vendor->image->real }}" width="100px" height="50px" style="border-radius: 50%">
                            Vendor {{ $vendor->full_name }}
                         </div>                        
                      </div>
