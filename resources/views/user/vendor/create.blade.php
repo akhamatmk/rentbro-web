@@ -185,6 +185,7 @@
            addRemoveLinks: true,
            sending: function(file, xhr, formData) {
             formData.append("_token", "{{ csrf_token() }}");
+            formData.append("storage", "vendor");
          },
          removedfile: function(file) {
              $("#"+file.upload.uuid).remove();

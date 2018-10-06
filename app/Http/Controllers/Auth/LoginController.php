@@ -100,35 +100,46 @@ class LoginController extends Controller
 
     public function redirectToProvider($provider, Request $request)
     {
-        $forAuth = $request->input('authFor') ? $request->input('authFor') : null;
-        if(isset($forAuth))        
-            $request->session()->put('state_form', 'login');
-        else
-            $request->session()->put('state_form', 'register');
+        try {
+            $forAuth = $request->input('authFor') ? $request->input('authFor') : null;
+            if(isset($forAuth))        
+                $request->session()->put('state_form', 'login');
+            else
+                $request->session()->put('state_form', 'register');
 
-        return Socialite::driver($provider)->redirect();
+            return Socialite::driver($provider)->redirect();    
+        } catch (Exception $e) {
+            dd($e);
+        }
+        
     }
 
     public function handleProviderCallback($provider, Request $request)
     {
-        $authFor = $request->session()->get('state_form');
-        $user = Socialite::driver($provider)->stateless()->user();
-        $request->session()->forget('state_form');
-        
-        if($authFor == 'register'){
-            $response = get_api_response('user/register/'.$provider, 'POST', [], $user);
-            if($response->code != 200)
-                return view('auth/login')->with('error_message', $response->message);
-            else
+        try {
+            $authFor = $request->session()->get('state_form');
+            $user = Socialite::driver($provider)->stateless()->user();
+            $request->session()->forget('state_form');
+            
+            if($authFor == 'register'){
+                $response = get_api_response('user/register/'.$provider, 'POST', [], $user);
+                if($response->code != 200)
+                    return view('auth/login')->with('error_message', $response->message);
+                else
+                    return redirect('home');
+            }
+            else if($authFor == 'login'){
+                $response = get_api_response('user/login/with/'.$provider, 'POST', [], $user);
+                if($response->code != 200)
+                    return view('auth/register')->with('error_message', $response->message);
+                else
+                    return redirect('home');
+            }else
                 return redirect('home');
+        } catch (Exception $e) {
+            dd($e);
         }
-        else if($authFor == 'login'){
-            $response = get_api_response('user/login/with/'.$provider, 'POST', [], $user);
-            if($response->code != 200)
-                return view('auth/register')->with('error_message', $response->message);
-            else
-                return redirect('home');
-        }else
-            return redirect('home');
+
+        
     }
 }

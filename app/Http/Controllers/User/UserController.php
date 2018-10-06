@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Session;
 
 class UserController extends Controller
 {
@@ -58,13 +59,70 @@ class UserController extends Controller
                     ->with('active', 'address');   
     }
 
-    public function change_password()
+    public function make_new_password(Request $request)
     {
+        $response = get_api_response('user/set/new/password', 'POST', [], $_POST);
+        if($response->code != 200 )
+            return back();
+
+        Session::flash('message-success', 'password berhasil diganti');
+        return redirect('account/change_password');
+    }
+
+    public function send_code_new_password()
+    {
+        $response = get_api_response('user/send/code/newPassword', 'GET', [], ['type' => 1]);
+        if($response->code != 200)
+            return redirect('user/make/newPassword');
+
         $response = get_api_response('user/info');
-        return view('user/password')
+
+        return view('user/send_code_make_password_succes')
                     ->with('user', $response->data)
                     ->with('menu', 'account')
                     ->with('active', 'change_password');
+    }
+
+    public function verify_code_new_password($code)
+    {
+        $response = get_api_response('user/check/code/newPassword', 'GET', [], ['code' => $code]);
+        if($response->code != 200)
+            return redirect('user/make/newPassword');
+
+        $response = get_api_response('user/info');
+
+        return view('user/make_new_password')
+                    ->with('user', $response->data)
+                    ->with('menu', 'account')
+                    ->with('active', 'change_password');
+    }
+
+    public function change_password()
+    {
+        $response = get_api_response('user/info');
+        
+        if($response->data->password_make == 0)
+            $template = "user/send_code_make_password";
+        else
+            $template = "user/password";
+
+        return view($template)
+                    ->with('user', $response->data)
+                    ->with('menu', 'account')
+                    ->with('active', 'change_password');
+    }
+
+    public function change_password_store()
+    {
+        $response = get_api_response('user/change/password', 'POST', [], $_POST);
+        if($response->code != 200 )
+        {
+            Session::flash('message-fail', 'password gagal diganti');
+            return redirect('account/change_password');
+        }
+
+        Session::flash('message-success', 'password berhasil diganti');
+        return redirect('account/change_password');
     }
 
     public function top_menu()
@@ -73,7 +131,7 @@ class UserController extends Controller
     	$html = "";
     	if(isset($response->data))
     		$html = view('layout.ajax_top_menu')->with(['data' => $response->data])->render();
-    	
+                	
     	return response()->json(['html' => $html]);
     }
 

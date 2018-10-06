@@ -21,8 +21,26 @@
                      </div>
                   </div>
                   <div class="row container_content mt-10">
+
+                     @if(Session::has('message-success'))
+                        <div class="col-md-12">
+                           <div class="alert alert-success">
+                              <strong>Success!</strong> Password Berhasil Diganti
+                           </div>
+                        </div>
+                     @endIf
+
+                     @if(Session::has('message-fail'))
+                        <div class="col-md-12">
+                           <div class="alert alert-danger">
+                              Password Lama salah
+                           </div>
+                        </div>
+                     @endIf
+                     
                      <div class="col-md-6">
                         <form data-toggle="validator" role="form" action="{{ url('account/change/password') }}" method="post">
+                           @csrf
                            <div class="form-group">
                               <label for="inputPassword" class="control-label">Password Lama</label>
                               <div class="form-inline row">
@@ -37,7 +55,7 @@
                               <label for="inputPassword" class="control-label">Password Baru</label>
                               <div class="form-inline row">
                                  <div class="form-group col-sm-8">
-                                    <input type="password" data-minlength="6" data-minlength-error="Minimal 6 character"  data-required-error="Harus diisi"  class="form-control" id="inputPassword" placeholder="Password" required>
+                                    <input type="password" data-minlength="6" data-minlength-error="Minimal 6 character"  data-required-error="Harus diisi" name="password"  class="form-control" id="inputPassword" placeholder="Password" required>
                                     <div class="help-block with-errors"></div>
                                  </div>
                               </div>

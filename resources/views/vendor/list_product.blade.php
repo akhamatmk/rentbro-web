@@ -122,32 +122,35 @@ h6 {
 }
 	</style>
 	<h1>List Produt</h1>
-	<div class="products">
-		@foreach($product as $value)
+	<a class="btn btn-primary" style=" margin-bottom: 20px" href="{{ url($vendor->nickname.'/product-add') }}"> Tambah Produk</a>
+	<div class="products mb-20">
+		@foreach($product as $value)			
 			<div class="product-card">
+				<a href="{{ url('product/'.$vendor->nickname.'/'.$value->alias) }}">
 				<div class="product-image">
 					<img src="{{ $value->image->real }}">
 				</div>
 				<div class="product-info">
 					<h5>{{ $value->name }}</h5>
-					<h6>Rp. {{ number_format($value->price[0]->price) }}</h6>
+					<h6>Rp. 
+						@if(isset($value->price[0]->price))
+							{{ number_format($value->price[0]->price) }}
+						@else
+							0
+						@endIf
+					</h6>
 				</div>
+				</a>
 			</div>
-		@endForeach		
-		<div class="product-card">
-		
-		</div>
+			
+		@endForeach
 
-		<div class="product-card">
-		
-		</div>
-
-		<div class="product-card">
-		
-		</div>
-
-		<div class="product-card">
-		
-		</div>
-		
+		@if(count($product) > 0 And count($product) < 5)
+			@for($a = count($product); $a <= 5; $a++)
+				<div class="product-card">
+			
+				</div>
+			@endFor	
+		@endIf
+		<br><br><br><br>
 	</div>
