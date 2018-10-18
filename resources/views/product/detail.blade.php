@@ -46,7 +46,7 @@
    animation-duration: .3s; }
    .card {
    margin-top: 20px;
-   background: #eee;
+   background: white;
    padding: 1em;
    line-height: 1.5em; }
    @media screen and (min-width: 997px) {
@@ -154,24 +154,10 @@
                <div class="card">
                   <div class="container-fliud">
                      <div class="wrapper row">
-                        <div class="preview col-md-5" style="max-height: 260px;">
-                           <div class="preview-pic tab-content">
-                              <div class="tab-pane active" style="text-align: center;" id="pic-1">
-                                 <img src="{{ $product->image->real }}" style="width: 330px; height: 200px"></div>
-                                 @foreach($product->other_image as $key => $value)
-                                    @php ($no = 2 + $key)
-                                    <div class="tab-pane" style="text-align: center;" id="pic-{{ $no }}"><img style="width: 330px; height: 200px" src="{{ $value->image->real }}" /></div>
-                                 @endForeach
-                           </div>
-                           <ul class="preview-thumbnail nav nav-tabs">
-                              <li class="active"><a data-target="#pic-1" data-toggle="tab">
-                                 <img style="width: 60px;" src="{{ $product->image->thumbnail }}" /></a>
-                              </li>
-                              @foreach($product->other_image as $key => $value)
-                                 @php ($no = 2 + $key)
-                                 <li><a  data-target="#pic-{{ $no }}" data-toggle="tab"><img style="width: 60px;" src="{{ $value->image->thumbnail }}" /></a></li>
-                              @endForeach                              
-                           </ul>
+                        <div class="preview col-md-5" >
+                                                      
+                           @include('product.image_slider')
+                           
                         </div>
                         <div class="details col-md-7" >
                            <h4 class="product-title">{{ $product->name }}</h4>
@@ -329,7 +315,11 @@
 
                $("#end_date").val(result);
             }            
-         }         
+         } 
+
+
+         $('.sp-wrap').smoothproducts();
+
 		});
 	</script>
 @endsection

@@ -1,5 +1,5 @@
 <div>
-	<div style="background: white; height: 160px;">
+	<div style="background: white;">
 		<div style="margin: 10px">
 			<h5 style="margin-top: 10px"><br/>Information Vendor </h5>
 			<div class="row">

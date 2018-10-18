@@ -19,6 +19,9 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/responsive.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/dropzone.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/pikaday.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/pikaday.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/smoothproducts.css') }}">
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/zebra_datepicker@latest/dist/css/default/zebra_datepicker.min.css">
@@ -75,6 +78,7 @@
     <script src="{{ asset('js/jquery.validate.js') }}"></script>
     <script src="{{ asset('js/moment.js') }}"></script>
     <script src="{{ asset('js/moment-with-locales.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/smoothproducts.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.js"></script>
