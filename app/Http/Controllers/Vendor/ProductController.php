@@ -32,12 +32,12 @@ class ProductController extends Controller
     }
 
     public function store($nickname, Request $request)
-    {           
+    {
+
         $rules = [
             'name'                  => 'required',
             'product_image_primary' => 'required',
             'price'                 => 'required',
-            'quantity'              => 'required',
             'weight'                => 'required'
         ];
 
@@ -61,6 +61,7 @@ class ProductController extends Controller
         }
 
         $_POST['option_value'] = $option_value;
+        $_POST['quantity'] = 100;
 
         if(isset($_POST['minimum_deposit']))
             $_POST['minimum_deposit'] = (int) str_replace(".", "", $request->minimum_deposit);
@@ -82,8 +83,8 @@ class ProductController extends Controller
             $_POST['product_images'] = $result_image;
         }
 
-        $response = get_api_response('vendor/'.$nickname.'/product/store', 'POST', [], $_POST);
 
+        $response = get_api_response('vendor/'.$nickname.'/product/store', 'POST', [], $_POST);
         if($response->code == 200)
             Session::flash('message-success', 'Sukses');
         else

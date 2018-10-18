@@ -29,6 +29,7 @@
 	.presentation{
 	    margin-top: 10px !important;
 	}
+	
 </style>
 
 <div class="super_container">
@@ -43,7 +44,7 @@
  	<div class="contact_form">
 		<div class="container">
 			<div class="row">				
-				<div class="col-xs-12 col-sm-6 col-lg-6" align="center" style=" margin: auto; padding: 10px;">
+				<div class="col-xs-12 col-sm-8 col-lg-8" align="center" style=" margin: auto; padding: 10px;">
 
 					<div class="contact_form_container" style="margin : 10px; border: 1px solid #e0e0e0; border-radius: 3px!important; box-shadow: 0 0 10px 0 rgba(0,0,0,.1)!important;">
 						<div class="contact_form_title" style="text-align: center; margin-top: 10px">Daftarkan Vendor Anda</div>
@@ -98,12 +99,20 @@
 
 							<div class="mb-30 form-input">
 								<label>Kode Pos:</label>
-								<input name="zip_code" type="text" id="zip_code" class="input_field" placeholder="Kode Pos">
+								<input name="zip_code" type="text" id="zip_code" class="input_field" placeholder="Kode Pos" required="required">
 							</div>
 
 							<div class="mb-30 form-input">
 								<label>Detail Lokasi Warehouse:</label>
-								<textarea name="detail_location" id="detail_location" class="input_field input_textarea" cols="10"></textarea>
+								<textarea name="detail_location" id="detail_location" class="input_field input_textarea" cols="10" required="required"></textarea>
+							</div>
+
+							<div class="mb-30 form-input">
+								<label>Pilih lokasi di map:</label>
+								<input name="map_street" id="map_street" type="text" class="input_field" readonly="readonly" required="required" style="margin-bottom: 10px">
+								<input type="hidden" name="lat" id="lat">
+								<input type="hidden" name="long" id="long">
+								@include('user/vendor/maps')
 							</div>
 
 							<div class="mb-30 form-input">
@@ -118,8 +127,8 @@
 						
 							<div class="mb-30 form-input">
 		                        <label>Logo:</label>		                        
-		                        <div style="margin-left: 10px" id="dropzone-primary" class="dropzone tx-center"></div>                        
-		                     </div>
+		                        <div style="margin-left: 10px" id="dropzone_primary" name="dropzone_primary" class="dropzone tx-center"></div>                        
+		                     </div>		                     
 
 							<div id="image">
 							
@@ -167,6 +176,27 @@
 					},
 					full_name: {
 						required: "{{trans('messages.must_fill')}}",
+					},
+					dropzone_primary: {
+						required: "{{trans('messages.must_fill')}}",
+					},
+					district: {
+						required: "{{trans('messages.must_fill')}}",
+					},
+					zip_code: {
+						required: "{{trans('messages.must_fill')}}",
+					},
+					motto: {
+						required: "{{trans('messages.must_fill')}}",
+					},
+					description: {
+						required: "{{trans('messages.must_fill')}}",
+					},
+					detail_location: {
+						required: "{{trans('messages.must_fill')}}",
+					},
+					map_street: {
+						required: "{{trans('messages.must_fill')}}",
 					}
 				}
 			});
@@ -178,7 +208,7 @@
 			setTimeout(fade_out, 3000);
 		});
 
-		$("#dropzone-primary").dropzone({ 
+		$("#dropzone_primary").dropzone({ 
            url: "{{ URL('upload/image') }}", 
            maxFiles: 1,
            paramName: "image", 
@@ -259,8 +289,12 @@
 			});
 		});
 
+
+
+
       $("#province").select2();
       $("#regency").select2();
       $("#district").select2();
 	</script>
+	
 @endsection

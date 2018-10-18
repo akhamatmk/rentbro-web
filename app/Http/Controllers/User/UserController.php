@@ -35,6 +35,9 @@ class UserController extends Controller
         $data['postal_code'] = $request->postal_code;
         $data['full_address'] = $request->full_address;
         $data['primary'] = $request->primary;
+        $data['map_street'] = $request->map_street;
+        $data['long'] = $request->long;
+        $data['lat'] = $request->lat;
 
         $response = get_api_response('user/address/'.$id, 'PUT', [], $data);
         return response()->json($response->code);

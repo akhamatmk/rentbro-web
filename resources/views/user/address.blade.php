@@ -69,6 +69,27 @@
   from{ opacity: 0}
   to {opacity: 1}
 }
+
+@media screen and (min-width: 997px) {
+		.modal-content{
+			width: 140%;
+			margin-left: -50px;
+		}
+	}
+
+.pac-container {
+    background-color: #FFF;
+    z-index: 20;
+    position: fixed;
+    display: inline-block;
+    float: left;
+}
+.modal{
+    z-index: 20;   
+}
+.modal-backdrop{
+    z-index: 10;        
+}​
 </style>
 
 <div class="super_container">
@@ -191,6 +212,13 @@
 
 				<div class="form-group">
 					<input type="full_address" class="form-control" id="full_address" name="full_address" required="required" placeholder="Nama Lengkap jalan , no rumah , no jalan" >
+				</div>
+
+				<div class="form-group">
+					<input name="map_street" id="map_street" type="text" class="form-control" readonly="readonly" required="required" style="margin-bottom: 10px">
+					<input type="hidden" name="lat" id="lat">
+					<input type="hidden" name="long" id="long">
+					@include('user/vendor/maps')
 				</div>
 
 				<div class="form-group">
@@ -355,6 +383,12 @@
 						$("#regency").val(data.data.address.regency_id);
 						$("#district").val(data.data.address.district_id);
 						$("#full_address").val(data.data.address.full_address);
+						
+						$("#long").val(data.data.address.long);
+						$("#lat").val(data.data.address.lat);
+						$("#map_street").val(data.data.address.map_street);
+
+
 						$("#exampleModal").modal("show");
 					}
 			   })

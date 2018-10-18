@@ -23,12 +23,33 @@
    margin-top: 10px;
    }
    }
+
+   
 </style>
 <div class="super_container">
 <header class="header">
    @include('layout.top_header')
    @include('layout.header', ['noCategory' => "yes"])
 </header>
+   
+   <div style="display: none;">   
+      <div class="col-sm-6" id="box-stock-clone" style="margin-bottom: 15px;">
+         <div class="container-price">
+            <div class="body-price">
+               <select class="form-control mt-10 col-lg-8 mb-10 variant_option" data-id="1" name="option[]" id="clone-option" multiple="multiple">
+                  @foreach($product_option as $key => $value)
+                  <option value="{{ $value->id }}">{{ $value->name }}</option>
+                  @endForeach
+               </select>
+               <div class="mt-10">
+               </div>
+               <select class="form-control mt-10 col-lg-8 mt-20 clone-value" id="clone-value" data-id="1" name="value[]" multiple="multiple"></select>
+               <input type="number" class="form-control mt-10 col-lg-8 mt-20" name="stock_variant[]" placeholder="Stock Variant">
+            </div>
+         </div>
+      </div>
+   </div>
+
 <form class="mt-10" method="post" action="{{ url($vendor->nickname.'/product-add') }}">
    <div class="container-add-product">
       <div class="container mt-20">
@@ -39,6 +60,17 @@
                   Product Berhasil Ditambahkan
                </div>
                @endIf
+
+              @if(Session::has('error_message'))
+                  <div id="error_message" class="error_message" style="">
+                     <ul style="margin-left: 30px; color: red; text-align: left">
+                        @foreach(Session::get('error_message') as $key => $value)
+                           <li>{{ $value }}</li>
+                        @endForeach                         
+                     </ul> 
+                  </div>
+               @endIf
+
                <h3 class="header-container-add-product">Tambah Barang</h3>
                @csrf
                <input type="hidden" name="nickname" value="{{ $vendor->nickname }}">
@@ -91,21 +123,43 @@
       <div class="container">
          <div class="row">
             <div class="col-lg-12 container-body-add-proudct mb-30">
-               <h3 class="header-container-add-product">Variant Product</h3>
-               <div class="col-sm-6" style="margin-bottom: 15px;">
-                  <div class="container-price">
-                     <div class="body-price">
-                        <select class="form-control mt-10 col-lg-8 mb-10" name="option[]" id="option" multiple="multiple">
-                           @foreach($product_option as $key => $value)
-                           <option value="{{ $value->id }}">{{ $value->name }}</option>
-                           @endForeach
-                        </select>
-                        <div class="mt-10">
-                        </div>
-                        <select class="form-control mt-10 option-value-product col-lg-8 mt-20" data-id="0" name="value[]" id="option_value_0" multiple="multiple"></select>
-                     </div>
+               <h3 class="header-container-add-product">Variant Product And Stock </h3>            
+               <div class="form-group row">
+                  <label for="colFormLabel" class="col-sm-2 col-form-label">Variant</label>
+                  <div class="col-sm-3">
+                     <select class="form-control" id="variant" name="variant">
+                        <option value="1">Ada</option>
+                        <option value="0">Tidak</option>
+                     </select>
                   </div>
                </div>
+
+               <div class="form-group row" id="no_variant" style="display: none;">
+                  <label class="control-label col-sm-2" for="quantity">Jumlah Barang</label>
+                  <div class="col-sm-6">
+                     <input type="text" name="quantity" id="quantity" class="form-control">
+                  </div>
+               </div>
+
+               <button type="button" style="cursor: pointer; margin-bottom: 10px" class="btn btn-primary" id="tambah-stock">Add variant stock</button> 
+               <div id="priceStockLoad" class="form-group row priceStockLoad">               
+                  <div class="col-sm-6" id="box-stock" style="margin-bottom: 15px;">
+                     <div class="container-price">
+                        <div class="body-price">
+                           <select class="form-control mt-10 col-lg-8 mb-10 option_first" name="option[]" id="option" multiple="multiple">
+                              @foreach($product_option as $key => $value)
+                              <option value="{{ $value->id }}">{{ $value->name }}</option>
+                              @endForeach
+                           </select>
+                           <div class="mt-10">
+                           </div>
+                           <select class="form-control mt-10 option-value-product col-lg-8 mt-20" data-id="0" name="value[]" id="option_value_0" multiple="multiple"></select>
+                           <input type="number" class="form-control mt-10 col-lg-8 mt-20" name="stock_variant[]" placeholder="Stock Variant">
+                        </div>
+                     </div>
+                  </div>                                                   
+               
+               </div>            
             </div>
          </div>
       </div>
@@ -160,12 +214,21 @@
          <div class="row">
             <div class="col-lg-12 container-body-add-proudct">
                <h3 class="header-container-add-product">Detail Produk Dan Term condition</h3>
+               
                <div class="form-group row">
-                  <label class="control-label col-sm-2" for="quantity">Jumlah Barang</label>
+                  <label class="control-label col-sm-2" for="min_order">Maximal Jarak Cod Free (KM)</label>
                   <div class="col-sm-6">
-                     <input type="text" name="quantity" id="quantity" class="form-control">
+                     <input type="number" min="0" name="max_cod_free" id="max_cod_free" class="form-control" value="0">
                   </div>
                </div>
+
+               <div class="form-group row">
+                  <label class="control-label col-sm-2" for="min_order">Harga Jarak Cod(Per Satu Km)</label>
+                  <div class="col-sm-6">
+                     <input type="number" min="0" name="price_cod" id="price_cod" class="form-control format-nominal" value="0">
+                  </div>
+               </div>
+
                <div class="form-group row">
                   <label class="control-label col-sm-2" for="min_order">Berat Barang</label>
                   <div class="col-sm-6">
@@ -228,17 +291,89 @@
    };
    		
    $(function() {
+      let stock_index = 1;
+      init_pricing();
+
+      $("#variant").change(function()
+      {
+         let value = $(this).val();
+
+         if(value == 1){
+            $("#no_variant").hide();
+            $("#tambah-stock").show();
+            $("#priceStockLoad").show();
+         }
+         else{
+            $("#no_variant").show();
+            $("#tambah-stock").hide();
+            $("#priceStockLoad").hide();
+         }
+      });
+
+      function init_pricing(){
+        $('#tambah-stock').on('click',function(){
+            newprice = $('#box-stock-clone').clone();
+            newprice.removeAttr('id');
+            var $data = newprice.find('#clone-option');
+            $data.attr('id','option.'+stock_index);
+            $data.data('id', stock_index);
+            $data.select2();
+
+            var $data1 = newprice.find('#clone-value');
+            $data1.attr('id','value.'+stock_index);
+            $data1.attr('class','form-control mt-10 col-lg-8 mb-10 value-'+stock_index);
+            $data1.data('id', stock_index);
+            $data1.select2({
+               templateResult: addColor,
+               templateSelection: addColor
+            });
+
+            stock_index++;         
+            $('#box-stock').after(newprice);
+            getValueOptionVariant();
+        });
+      }
+
+      function getValueOptionVariant()
+      {
+         $(".variant_option").change(function(){
+            let id = $(this).data('id');
+            let data = $(this).select2("val");
+            if(data.length > 0)
+            {
+               $.ajax({
+                  type: "POST",
+                  url: "{{ url('product/option/multiple') }}",
+                  data : { "data": data, "_token": "{{ csrf_token() }}"},
+                  dataType: 'json',
+                  success: function(data){
+                     $(".value-"+id).html("");
+                     $.each( data, function( key, value ) {
+                        if(value.product_option_id == 1)
+                        {
+                           var option = '<option data-color="'+value.value+'" value="'+value.product_option_id+'_'+value.id+'" style="background-color:'+value.value+'"><span style="background-color:'+value.value+'"></span></option>';
+                        } else {
+                           var option = '<option style="background-color: #ffffff" value="'+value.product_option_id+'_'+value.id+'">'+value.value+'</option>'
+                        }
+                        $(".value-"+id).append(option);
+                     });
+                  }
+               });
+            }
+         });
+      }
+
    	$("#category").select2();
    	$("#category2").select2();
    	$("#catalogue").select2();
    	$("#option").select2();			
    	$(".option-value-product").select2({
             templateResult: addColor,
-         			templateSelection: addColor
+         	templateSelection: addColor
       });
    
       $('#option').on("change", function() {    		    			
-     			var data = $(this).select2("val");
+     			let data = $(this).select2("val");
      			$(this).select2().val();
      			if(data.length > 0)
      			{
@@ -261,7 +396,7 @@
    					});
    				}
    			});	
-     			}
+     		}
    	}); 
    
    	$("#tambah-harga").click(function(){

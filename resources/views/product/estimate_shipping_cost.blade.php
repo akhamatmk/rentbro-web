@@ -30,9 +30,42 @@
 </style>
 
 <div class="form-group">
-	<div class="mb-20 form-input">
+	<div class="mb-20 form-input col-md-6">
+		<span>Jenis Courir:</span><br/>
+		<select id="type_courir" name="type_courir" class="input_field form-control">
+			<option value="1">Cod</option>
+			<option value="2">Courir Lain</option>
+		</select>
+	</div>
+
+
+	<div class="mb-20 form-input col-md-6 cod">
+		<span>Harga Per KM jika jarak melewati {{ $product->max_cod_free }} KM :</span><br/>
+		<input type="text" class="form-control" readonly="readonly" value="{{ number_format($product->price_cod) }}">
+	</div>
+
+	<div class="mb-20 form-input col-md-6 cod">
+		<span>Pilih Alamat yang sudah didaftarkan :</span><br/>
+		<select class="form-control" id="addres">
+			@foreach($user_address as $key => $value)
+				<option value="" data-long="{{ $value->long }}" data-lat="{{ $value->lat }}" >{{ $value->name }} ({{ $value->full_address }})</option>
+			@endForeach
+		</select>
+	</div>
+
+	<div class="mb-20 form-input col-md-6 cod">
+		<span>Jarak :</span><br/>
+		<input type="text" class="form-control" readonly="readonly" id="jarak" value="{{ $distance }} KM">
+	</div>
+
+	<div class="mb-20 form-input col-md-6 cod">
+		<span>Biaya shipping :</span><br/>
+		<input type="text" class="form-control" readonly="readonly" id="cod" value="{{ number_format($price_cod) }}">
+	</div>
+
+	<div class="mb-20 form-input col-md-6 no-cod">
 		<span>Provinsi:</span><br/>
-		<select id="province" name="province" class="input_field col-md-6">
+		<select id="province" name="province" class="input_field ">
 				<option value="">-Silahkan Pilih-</option>
 			@foreach($province as $key => $value)
 				<option value="{{ $value->id }}">{{$value->name}}</option>
@@ -40,17 +73,17 @@
 		</select>
 	</div>
 
-	<div class="mb-20 form-input">
+	<div class="mb-20 form-input col-md-6 no-cod">
 		<span>Kota/Kabubupaten:</span><br/>
 		<select id="regency" name="regency" class="input_field col-md-6"></select>
 	</div>
 
-	<div class="mb-20 form-input">
+	<div class="mb-20 form-input col-md-6 no-cod">
 		<span>Courir:</span><br/>
 		<select id="courier" name="courier" class="input_field col-md-6"></select>
 	</div>
 
-	<div class="mb-20 form-input">
+	<div class="mb-20 form-input col-md-6 no-cod">
 		<span>Biaya Kirim:</span><br/>
 		<select id="shipping" name="shipping" class="input_field col-md-6"></select>
 	</div>
@@ -59,12 +92,25 @@
 
 
 	<script type="text/javascript">
-			ready(function(){
-			
-			$("#province").select2();
+	ready(function(){
+		$(".no-cod").hide();
+		$("#province").select2();
       	$("#regency").select2();
       	$("#courier").select2();
       	$("#shipping").select2();
+
+      	$("#type_courir").change(function(){
+      		let val = $(this).val();
+
+      		if(val == 1)
+      		{
+      			$(".cod").show();
+      			$(".no-cod").hide();
+      		}else{
+      			$(".cod").hide();
+      			$(".no-cod").show();
+      		}
+      	});
 
       	$("#province").change(function(){
 				$.ajax({
