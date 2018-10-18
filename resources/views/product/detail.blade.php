@@ -173,33 +173,33 @@
                            </div> -->
                            <div>
                               <span>Lama Peminjaman :</span>
-                           	<select class="form-control" id="price_type" name="price_type">
-                           		@foreach($product->price as $key => $value)
-                           			<option data-type="{{ $value->type }}" data-amount="{{ $value->amount }}" value="{{ $value->id }}"> Rp. {{ number_format($value->price) }} / {{ $value->amount }}
-                           				@switch($value->type)
-													   @case(1)
-													   	Hari    
-													      @break
+                              <select class="form-control" id="price_type" name="price_type">
+                                 @foreach($product->price as $key => $value)
+                                    <option data-type="{{ $value->type }}" data-amount="{{ $value->amount }}" value="{{ $value->id }}"> Rp. {{ number_format($value->price) }} / {{ $value->amount }}
+                                       @switch($value->type)
+                                          @case(1)
+                                             Hari    
+                                             @break
 
-													   @case(2)
-													      Minggu
-													      @break
+                                          @case(2)
+                                             Minggu
+                                             @break
 
-													   @case(3)
-													      Bulan
-													      @break
+                                          @case(3)
+                                             Bulan
+                                             @break
 
-													   @default
-													      Hari
-													@endswitch
-                           			</option>
-                           		@endForeach
-                           	</select>
+                                          @default
+                                             Hari
+                                       @endswitch
+                                    </option>
+                                 @endForeach
+                              </select>
                            </div>
-									<small class="deposit-price">
-										<strong>Deposit : {{ number_format($product->minimum_deposit) }}</strong>
-									</small>
-									
+                           <small class="deposit-price">
+                              <strong>Deposit : {{ number_format($product->minimum_deposit) }}</strong>
+                           </small>
+                           
                            <div class="row mt-10">
                               <div class="col-md-6">
                                  <span>Start Date</span>
@@ -270,21 +270,21 @@
 
 @include('layout.copyright')
 @endsection
-	
+   
 @section('footer-script')
-	<script type="text/javascript">
+   <script type="text/javascript">
       
-		$(function() {         
-		   $('#start_date').Zebra_DatePicker({
-			    direction: ['{{date("Y-m-d")}}', false],
+      $(function() {         
+         $('#start_date').Zebra_DatePicker({
+             direction: ['{{date("Y-m-d")}}', false],
              onSelect: function (date) {
                 end_date();
             }
-			});			
+         });         
 
-			$("#price_type").change(function(){
+         $("#price_type").change(function(){
             end_date();            
-			});
+         });
 
          function end_date()
          {
@@ -320,12 +320,12 @@
 
          
 
-		});
+      });
 
       var $=jQuery.noConflict();
 
       $(document).ready(function(){
          $('.sp-wrap').smoothproducts();
       });
-	</script>
+   </script>
 @endsection
