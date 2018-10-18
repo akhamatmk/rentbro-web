@@ -1,0 +1,2 @@
+[18-Oct-2018 04:09:58 UTC] PHP Warning:  require(/home/rentalbro/public_html/repositories/rentbro-web/public/../vendor/autoload.php): failed to open stream: No such file or directory in /home/rentalbro/public_html/repositories/rentbro-web/public/index.php on line 24
+[18-Oct-2018 04:09:58 UTC] PHP Fatal error:  require(): Failed opening required '/home/rentalbro/public_html/repositories/rentbro-web/public/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php71/root/usr/share/pear') in /home/rentalbro/public_html/repositories/rentbro-web/public/index.php on line 24
