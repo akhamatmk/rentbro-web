@@ -52,7 +52,8 @@ class ProductController extends Controller
         }
 
         $option_value = [];
-        if(count($request->value) > 0)
+
+        if($request->value != null AND count($request->value) > 0)
         {
             foreach ($request->value as $key => $value) {
                 $temp = explode("_", $value);
@@ -82,8 +83,7 @@ class ProductController extends Controller
 
             $_POST['product_images'] = $result_image;
         }
-
-
+        
         $response = get_api_response('vendor/'.$nickname.'/product/store', 'POST', [], $_POST);
         if($response->code == 200)
             Session::flash('message-success', 'Sukses');
