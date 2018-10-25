@@ -272,6 +272,8 @@
 @endsection
    
 @section('footer-script')
+   <script src="{{ asset('js/moment.js') }}"></script>
+   <script src="{{ asset('js/moment-with-locales.js') }}"></script>
    <script type="text/javascript">
       
       $(function() {         
@@ -316,10 +318,7 @@
                $("#end_date").val(result);
             }            
          } 
-
-
          
-
       });
 
       var $=jQuery.noConflict();

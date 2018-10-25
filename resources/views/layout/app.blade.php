@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/OwlCarousel2-2.2.1/owl.theme.default.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/OwlCarousel2-2.2.1/animate.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/slick-1.8.0/slick.css') }} ">
-<link rel="stylesheet" type="text/css" href="{{ asset('styles/main_styles.css?v=1') }} ">
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/main_styles.css') }} ">
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/other_main_styles.css') }} ">
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/responsive.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/dropzone.css') }}">
@@ -61,32 +61,30 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="{{ asset('styles/bootstrap4/popper.js') }}"></script>
     <script src="{{ asset('styles/bootstrap4/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('plugins/greensock/TweenMax.min.js') }}"></script>
-    <script src="{{ asset('plugins/greensock/TimelineMax.min.js') }}"></script>
+    
+    <!-- <script src="{{ asset('plugins/greensock/TweenMax.min.js') }}"></script>
+    <script src="{{ asset('plugins/greensock/TimelineMax.min.js') }}"></script> -->
+    
     <script src="{{ asset('plugins/scrollmagic/ScrollMagic.min.js') }}"></script>
     <script src="{{ asset('plugins/greensock/animation.gsap.min.js') }}"></script>
     <script src="{{ asset('plugins/greensock/ScrollToPlugin.min.js') }}"></script>
     <script src="{{ asset('plugins/OwlCarousel2-2.2.1/owl.carousel.js') }}"></script>
     <script src="{{ asset('plugins/slick-1.8.0/slick.js') }}"></script>
     <script src="{{ asset('plugins/easing/easing.js') }}"></script>
-    <script src="{{ asset('js/custom.js?v=1') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
     <script src="{{ asset('js/jquery.validate.js') }}"></script>
-    <script src="{{ asset('js/dropzone.js') }}"></script>
-    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    
+    
     <script src="{{ asset('js/jquery.maskMoney.min.js') }}"></script>
     <script src="{{ asset('js/pikaday.js') }}"></script>    
     <script src="{{ asset('js/jquery.validate.js') }}"></script>
-    <script src="{{ asset('js/moment.js') }}"></script>
-    <script src="{{ asset('js/moment-with-locales.js') }}"></script>
+    
     <script type="text/javascript" src="{{ asset('js/smoothproducts.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/zebra_datepicker@latest/dist/zebra_datepicker.min.js"></script>
-    <script type="text/javascript">
-        Dropzone.autoDiscover = false;        
-    </script>    
+    <script src="https://cdn.jsdelivr.net/npm/zebra_datepicker@latest/dist/zebra_datepicker.min.js"></script> 
     
     @yield('footer-script')
 </body>

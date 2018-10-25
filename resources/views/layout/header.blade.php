@@ -7,7 +7,7 @@
 					<!-- Logo -->
 					<div class="col-lg-2 col-sm-3 col-3 order-1">
 						<div class="logo_container">
-							<div class="logo"><a href="{{ url('/') }}"><img height="70px" src="{{ asset('images/5842a4f5a6515b1e0ad75af6.png') }}"></a></div>
+							<div class="logo"><a href="{{ url('/') }}"><img height="70px" src="{{ asset('images/logo.png') }}"></a></div>
 						</div>
 					</div>
 

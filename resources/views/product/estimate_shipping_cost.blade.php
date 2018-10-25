@@ -29,29 +29,75 @@
 	}
 </style>
 
+	<input type="hidden" id="vendor-long" value="{{ $vendor_addres->longitude }}">
+	<input type="hidden" id="vendor-lat" value="{{ $vendor_addres->latitude }}">
+	<input type="hidden" id="price-cod" value="{{ $product->price_cod }}">
+
 <div class="form-group">
 	<div class="mb-20 form-input col-md-6">
 		<span>Jenis Courir:</span><br/>
+		
+
 		<select id="type_courir" name="type_courir" class="input_field form-control">
 			<option value="1">Cod</option>
 			<option value="2">Courir Lain</option>
 		</select>
 	</div>
 
+	
+
+	@if(count($user_address) > 0)
+		<div class="mb-20 form-input col-md-6">
+			<span>Pilih Alamat Anda:</span><br/>
+			<select id="place" class="input_field form-control">
+				@foreach($user_address as $key => $value)
+					@if($key == 0)
+						@php
+							$full_address = $value->full_address;
+							$postal_code = $value->postal_code;
+							$district_name = $value->district_name;
+							$regency_name = $value->regency_name;
+							$provincy_name = $value->provincy_name;
+						@endphp
+					@endIf
+					<option 
+						data-full_address="{{ $value->full_address }}" 
+						data-postal_code="{{ $value->postal_code }}" 
+						data-district_name="{{ $value->district_name }}" 
+						data-regency_name="{{ $value->regency_name }}" 
+						data-provincy_name="{{ $value->provincy_name }}" 
+						data-longitude="{{ $value->long }}" 
+						data-latitude="{{ $value->lat }}" 
+						value="{{ $value->id }}"> 
+							{{ $value->name }} 
+						</option>
+				@endForeach
+			</select>
+		</div>
+
+		<div class="mb-20 form-input col-md-6">
+			<span><b>Detail Alamat </b></span>
+			<p id="detail_address">
+				{{ $full_address }} {{ $postal_code }} {{ $district_name }}, {{ $regency_name }} {{ $provincy_name }}
+			</p>		
+		</div>
+
+		<div class="mb-20 form-input col-md-6 no-cod">
+			<span>Courir:</span><br/>
+			<select class="input_field form-control">
+				@foreach($courier as $value)
+					<option value="{{ $value['code'] }}"> {{ $value['name'] }} </option>
+					@endForeach
+			</select>
+		</div>
+
+	@endIf
+
 
 	<div class="mb-20 form-input col-md-6 cod">
 		<span>Harga Per KM jika jarak melewati {{ $product->max_cod_free }} KM :</span><br/>
 		<input type="text" class="form-control" readonly="readonly" value="{{ number_format($product->price_cod) }}">
-	</div>
-
-	<div class="mb-20 form-input col-md-6 cod">
-		<span>Pilih Alamat yang sudah didaftarkan :</span><br/>
-		<select class="form-control" id="addres">
-			@foreach($user_address as $key => $value)
-				<option value="" data-long="{{ $value->long }}" data-lat="{{ $value->lat }}" >{{ $value->name }} ({{ $value->full_address }})</option>
-			@endForeach
-		</select>
-	</div>
+	</div>	
 
 	<div class="mb-20 form-input col-md-6 cod">
 		<span>Jarak :</span><br/>
@@ -60,10 +106,10 @@
 
 	<div class="mb-20 form-input col-md-6 cod">
 		<span>Biaya shipping :</span><br/>
-		<input type="text" class="form-control" readonly="readonly" id="cod" value="{{ number_format($price_cod) }}">
+		<input type="text" class="form-control" readonly="readonly" id="cod" name="shipping_cod" value="{{ number_format($price_cod) }}">
 	</div>
 
-	<div class="mb-20 form-input col-md-6 no-cod">
+	<!-- <div class="mb-20 form-input col-md-6 no-cod">
 		<span>Provinsi:</span><br/>
 		<select id="province" name="province" class="input_field ">
 				<option value="">-Silahkan Pilih-</option>
@@ -81,11 +127,14 @@
 	<div class="mb-20 form-input col-md-6 no-cod">
 		<span>Courir:</span><br/>
 		<select id="courier" name="courier" class="input_field col-md-6"></select>
-	</div>
-
+	</div> -->
 	<div class="mb-20 form-input col-md-6 no-cod">
 		<span>Biaya Kirim:</span><br/>
-		<select id="shipping" name="shipping" class="input_field col-md-6"></select>
+		<select id="shipping" name="shipping" class="input_field col-md-6">
+			@foreach($cost as $key => $value)
+				<option value='{{ $value["cost"]->value }}'> {{ $value["service"] }} ({{ number_format($value["cost"]->value) }}) Estimated {{ $value["cost"]->etd }}</option>
+			@endForeach
+		</select>
 	</div>
 	
 </div>
@@ -111,6 +160,63 @@
       			$(".no-cod").show();
       		}
       	});
+
+      	$("#place").change(function(){
+      		let selected = $(this).find(':selected');
+      		let full_address  = selected.data('full_address');
+			let postal_code   = selected.data('postal_code');
+			let district_name = selected.data('district_name');
+			let regency_name  = selected.data('regency_name');
+			let provincy_name = selected.data('provincy_name');
+			let addres = full_address+" "+ postal_code+" "+district_name+" , "+regency_name+" "+provincy_name;
+			$("#detail_address").html(addres);
+
+			let type_courir = $("#type_courir").val();
+
+			if(type_courir == 1)
+				courir_cod();
+			else
+				courir_no_cod();
+      	});
+
+      	function courir_cod()
+      	{
+      		let options = "";
+			let locale = 'en-IN';
+			let formatter = new Intl.NumberFormat(locale, options);
+      		let selected = $("#place").find(':selected');
+      		let long_user = parseFloat(selected.data('longitude'));
+      		let lat_user = parseFloat(selected.data('latitude'));
+      		let long_vendor = parseFloat($("#vendor-long").val());
+      		let lat_vendor = parseFloat($("#vendor-lat").val());
+      		let dis = parseInt(distance(lat_user, long_user, lat_vendor, long_vendor, 'K'));
+ 			
+ 			let price = parseInt($("#price-cod").val()) * dis;
+      		$("#cod").val(formatter.format(price));
+      		$("#jarak").val(dis+" KM");
+      	}
+
+      	function courir_no_cod()
+      	{
+      		
+      	}
+
+      	function distance(lat1, lon1, lat2, lon2, unit) {
+			var radlat1 = Math.PI * lat1/180
+			var radlat2 = Math.PI * lat2/180
+			var theta = lon1-lon2
+			var radtheta = Math.PI * theta/180
+			var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+			if (dist > 1) {
+				dist = 1;
+			}
+			dist = Math.acos(dist)
+			dist = dist * 180/Math.PI
+			dist = dist * 60 * 1.1515
+			if (unit=="K") { dist = dist * 1.609344 }
+			if (unit=="N") { dist = dist * 0.8684 }
+			return dist;
+		}
 
       	$("#province").change(function(){
 				$.ajax({
@@ -170,7 +276,7 @@
 					url: '{{ URL::to("shipping/price") }}',
 					data : {
 						"destination": $("#regency").val(),
-						"weight": "{{$product->weight}}",
+						"weight": "{{ $product->weight}}",
 						"courier": $("#courier").val(),
 						"origin": "{{ isset($product->vendor->addres->regency->city_rajaongkir_id) ? $product->vendor->addres->regency->city_rajaongkir_id : 17}}",
 					},

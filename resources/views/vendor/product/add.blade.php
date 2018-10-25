@@ -266,6 +266,13 @@
 @include('layout.copyright')
 @endsection
 @section('footer-script')
+<script src="{{ asset('js/dropzone.js') }}"></script>
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+
+<script type="text/javascript">
+   Dropzone.autoDiscover = false;        
+</script>   
+
 <script type="text/javascript">
    let category ;
    let price_type_input = '@foreach($price_type as $key => $value) <option value="{{ $key }}">{{ $value }}</option> @endForeach';
