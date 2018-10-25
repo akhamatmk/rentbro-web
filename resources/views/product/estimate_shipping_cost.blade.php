@@ -67,7 +67,8 @@
 						data-regency_name="{{ $value->regency_name }}" 
 						data-provincy_name="{{ $value->provincy_name }}" 
 						data-longitude="{{ $value->long }}" 
-						data-latitude="{{ $value->lat }}" 
+						data-latitude="{{ $value->lat }}"
+						data-city_rajaongkir_id="{{ $value->city_rajaongkir_id }}"
 						value="{{ $value->id }}"> 
 							{{ $value->name }} 
 						</option>
@@ -84,7 +85,7 @@
 
 		<div class="mb-20 form-input col-md-6 no-cod">
 			<span>Courir:</span><br/>
-			<select class="input_field form-control">
+			<select class="input_field form-control" id="courier">
 				@foreach($courier as $value)
 					<option value="{{ $value['code'] }}"> {{ $value['name'] }} </option>
 					@endForeach
@@ -176,7 +177,7 @@
 			if(type_courir == 1)
 				courir_cod();
 			else
-				courir_no_cod();
+				getCourier();
       	});
 
       	function courir_cod()
@@ -194,11 +195,6 @@
  			let price = parseInt($("#price-cod").val()) * dis;
       		$("#cod").val(formatter.format(price));
       		$("#jarak").val(dis+" KM");
-      	}
-
-      	function courir_no_cod()
-      	{
-      		
       	}
 
       	function distance(lat1, lon1, lat2, lon2, unit) {
@@ -248,11 +244,14 @@
 
 			function getCourier()
 			{
+				let selected = $("#place").find(':selected');
+				let destination = selected.data('city_rajaongkir_id');
+
 				$.ajax({
 					type: "GET",
 					url: '{{ URL::to("courier") }}',
 					data : {
-						"destination": $("#regency").val(),
+						"destination": destination,
 						"weight": "{{$product->weight}}",
 						"origin": "{{ isset($product->vendor->addres->regency->city_rajaongkir_id) ? $product->vendor->addres->regency->city_rajaongkir_id : 17}}",
 					},
@@ -271,11 +270,14 @@
 
 			function price_shipping()
 			{
+				let selected = $("#place").find(':selected');
+				let destination = selected.data('city_rajaongkir_id');
+				
 				$.ajax({
 					type: "GET",
 					url: '{{ URL::to("shipping/price") }}',
 					data : {
-						"destination": $("#regency").val(),
+						"destination": destination,
 						"weight": "{{ $product->weight}}",
 						"courier": $("#courier").val(),
 						"origin": "{{ isset($product->vendor->addres->regency->city_rajaongkir_id) ? $product->vendor->addres->regency->city_rajaongkir_id : 17}}",
