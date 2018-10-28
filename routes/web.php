@@ -14,7 +14,6 @@
 Route::get('set/newPassword/{code}', 'User\UserController@verify_code_new_password')->middleware('with.auth');
 Route::get('user/make/newPassword')->uses('User\UserController@send_code_new_password')->middleware('with.auth');
 Route::post('make/new/password')->uses('User\UserController@make_new_password')->middleware('with.auth');
-
 Route::post('account/change/password')->uses('User\UserController@change_password_store')->middleware('with.auth');
 
 
@@ -23,8 +22,13 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('courier', 'ShippingController@courier');
 
+Route::get('ajax/chart/list', 'ChartController@ajax');
+Route::get('chart', 'ChartController@list')->middleware('with.auth');
+Route::post('chart', 'ChartController@checkout')->middleware('with.auth');
+
 Route::get('shipping/price', 'ShippingController@price');
 Route::get('product/{vendor}/{product}', 'ProductController@detail');
+Route::post('product/{vendor}/{product}', 'ProductController@chart');
 
 Route::get('place/regency', 'PlaceController@regency');
 Route::get('place/regency', 'PlaceController@regency');

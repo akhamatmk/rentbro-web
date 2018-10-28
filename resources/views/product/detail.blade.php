@@ -147,6 +147,9 @@
       @include('layout.header', ['noCategory' => "yes"])
    </header>
    <form action="" method="POST" >
+      @csrf
+      <input type="hidden" name="deposit_price" id="deposit_price" value="{{ $product->minimum_deposit }}">
+      <input type="hidden" name="product_id" id="product_id" value="{{ $product->id }}">
    <div class="user-content">
       <div class="container">
          <div class="row">
@@ -175,7 +178,7 @@
                               <span>Lama Peminjaman :</span>
                               <select class="form-control" id="price_type" name="price_type">
                                  @foreach($product->price as $key => $value)
-                                    <option data-type="{{ $value->type }}" data-amount="{{ $value->amount }}" value="{{ $value->id }}"> Rp. {{ number_format($value->price) }} / {{ $value->amount }}
+                                    <option data-type="{{ $value->type }}" data-amount="{{ $value->amount }}" data-price="{{ $value->price }}" value="{{ $value->id }}"> Rp. {{ number_format($value->price) }} / {{ $value->amount }}
                                        @switch($value->type)
                                           @case(1)
                                              Hari    
@@ -197,17 +200,24 @@
                               </select>
                            </div>
                            <small class="deposit-price">
-                              <strong>Deposit : {{ number_format($product->minimum_deposit) }}</strong>
+                              <strong>Deposit : {{ number_format($product->minimum_deposit) }}</strong>                              
                            </small>
                            
                            <div class="row mt-10">
                               <div class="col-md-6">
                                  <span>Start Date</span>
-                                 <input type="text" class="form-control" name="start_date" id="start_date"> 
+                                 <input type="text" class="form-control" name="start_date" id="start_date" value="{{ date('Y-m-d') }}"> 
                               </div>
                               <div class="col-md-6">
                                  <span>End Date</span>
-                                 <input type="text" disabled="disabled" class="form-control" name="end_date" id="end_date">
+                                 <input type="text" readonly="readonly" class="form-control" name="end_date" id="end_date">
+                              </div>
+                           </div>
+
+                           <div class="row mt-10">
+                              <div class="col-md-6">
+                                 <span>Berat Barang (KG)</span>
+                                 <input type="text" class="form-control" name="weight" id="weight" value="{{ $product->weight }}" readonly="readonly"> 
                               </div>
                            </div>
 
@@ -228,6 +238,14 @@
                                  </div>
                                  @endForeach
                               @endIf
+
+
+                           <div class="row mt-10">
+                              <div class="col-md-6">
+                                 <span>Jumlah Yang harus dibayar</span>
+                                 <input type="text" class="form-control" name="price" id="price" readonly="readonly"> 
+                              </div>
+                           </div>
                                                                                                    
                            <div class="row mt-10" style="margin-left: 5px">
                               <button class="add-to-cart btn btn-default" style="margin-right: 10px" type="submit">add to cart</button>
@@ -276,7 +294,30 @@
    <script src="{{ asset('js/moment-with-locales.js') }}"></script>
    <script type="text/javascript">
       
-      $(function() {         
+      $(function() {
+
+         count_price();
+         end_date();
+
+         $("#shipping").change(function(){
+            count_price();   
+         });
+
+         function count_price()
+         {
+            let shipping = parseInt($("#shipping").val());
+            let deposit_price = parseInt($("#deposit_price").val());
+            let price_rent = parseInt($("#price_type").find(':selected').data('price'));
+            let summary = shipping + deposit_price + price_rent;
+            let result= format2(summary, '').slice(0, -3);
+
+            $("#price").val(result);
+         }
+
+         function format2(n, currency) {
+            return currency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+         }
+         
          $('#start_date').Zebra_DatePicker({
              direction: ['{{date("Y-m-d")}}', false],
              onSelect: function (date) {
@@ -285,7 +326,8 @@
          });         
 
          $("#price_type").change(function(){
-            end_date();            
+            end_date();
+            count_price();   
          });
 
          function end_date()

@@ -39,7 +39,7 @@
 		
 
 		<select id="type_courir" name="type_courir" class="input_field form-control">
-			<option value="1">Cod</option>
+			<!-- <option value="1">Cod</option> -->
 			<option value="2">Courir Lain</option>
 		</select>
 	</div>
@@ -49,7 +49,7 @@
 	@if(count($user_address) > 0)
 		<div class="mb-20 form-input col-md-6">
 			<span>Pilih Alamat Anda:</span><br/>
-			<select id="place" class="input_field form-control">
+			<select id="place" class="input_field form-control" name="place_id">
 				@foreach($user_address as $key => $value)
 					@if($key == 0)
 						@php
@@ -143,7 +143,8 @@
 
 	<script type="text/javascript">
 	ready(function(){
-		$(".no-cod").hide();
+		// $(".no-cod").hide();
+		$(".cod").hide();
 		$("#province").select2();
       	$("#regency").select2();
       	$("#courier").select2();
@@ -190,12 +191,26 @@
       		let lat_user = parseFloat(selected.data('latitude'));
       		let long_vendor = parseFloat($("#vendor-long").val());
       		let lat_vendor = parseFloat($("#vendor-lat").val());
-      		let dis = parseInt(distance(lat_user, long_user, lat_vendor, long_vendor, 'K'));
- 			
- 			let price = parseInt($("#price-cod").val()) * dis;
+      		let dis = Math.ceil(parseFloat(distance(lat_user, long_user, lat_vendor, long_vendor, 'K')));
+ 			let price_cod = parseInt($("#price-cod").val());
+ 			if(isNaN(price_cod))
+ 				price_cod = 0;
+
+ 			let price = price_cod * dis;
       		$("#cod").val(formatter.format(price));
       		$("#jarak").val(dis+" KM");
       	}
+
+      	function formatMoney(n, c, d, t) {
+		  var c = isNaN(c = Math.abs(c)) ? 2 : c,
+		    d = d == undefined ? "." : d,
+		    t = t == undefined ? "," : t,
+		    s = n < 0 ? "-" : "",
+		    i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+		    j = (j = i.length) > 3 ? j % 3 : 0;
+
+		  return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+		};
 
       	function distance(lat1, lon1, lat2, lon2, unit) {
 			var radlat1 = Math.PI * lat1/180
@@ -257,10 +272,10 @@
 					},
 					dataType: 'json',
 					success: function(data){
-						$("#courier").html();
-						$("#shipping").html();
+						$("#courier").html("");
+						$("#shipping").html("");
 						$.each( data, function( key, value ) {							
-							$("#courier").append("<option value='"+value.code+"'> "+value.code+"</option>");
+							$("#courier").append("<option value='"+value.code+"'> "+value.name+"</option>");
 						});
 
 						price_shipping();
