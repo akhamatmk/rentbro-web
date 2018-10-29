@@ -20,13 +20,14 @@
                   </div>
 					@if(count($data) > 0)
 						@foreach($data as $key => $value)
-							<div class="row">
+							<div class="row" id="chart_{{ $key }}">
 								<div class="col-md-2">
 									<img height="100px" src="{{ $value->product->image->real }}">
 								</div>
 
 								<div class="row col-md-10 mt-10">
-									<div class="col-md-12"><strong style="font-size: 18px">{{ $value->product->name }}</strong></div>
+									<div class="col-md-10"><strong style="font-size: 18px">{{ $value->product->name }}</strong></div>
+									<img  style="cursor: pointer;" alt="delete this data" data-chart="{{ $value->id }}" data-id="{{ $key }}" class="col-md-2 trash" height="50px" src="{{ asset('images/trash.png')}}">
 									<div class="col-md-6 mt-20">
                                  		<span>Lama Peminjaman :</span>
                                  		<select class="form-control price_type" data-id="{{ $key }}" id="price_type_{{ $key }}" name="price[]">
@@ -235,6 +236,12 @@
 			@endIf            
         }
 
+        $(".trash").click(function(){
+        		let chart_id = $(this).data('chart_id');
+        		let id = $(this).data('id');
+        		
+        });
+
         $(".place_id").change(function(){
       		let selected = $(this).find(':selected');
       		let id  = selected.data('id');
@@ -271,7 +278,7 @@
 				$("#total_pembayaran_shipping").val(format2(total_shipping, '').slice(0, -3));
 				$("#total_pembayaran_barang").val(format2(total_price, '').slice(0, -3));
 				$("#total_pembayaran_deposit").val(format2(total_deposit, '').slice(0, -3));
-				total_semua = total_price + total_shipping + dibayar;
+				total_semua = total_price + total_shipping + total_deposit;
 				$("#total_semua").val(format2(total_semua, '').slice(0, -3));
         	}
         	
