@@ -113,10 +113,15 @@
 									<div class="mt-20 form-input col-md-6">
 										<span>Biaya Kirim:</span><br/>
 										<select id="shipping_{{ $key }}" name="shipping[]" class="input_field  form-control shipping">
-											@foreach($cost as $key => $value)
-												<option value='{{ $value["cost"]->value }}'> {{ $value["service"] }} ({{ number_format($value["cost"]->value) }}) Estimated {{ $value["cost"]->etd }}</option>
+											@foreach($cost as $k => $v)
+												<option value='{{ $v["cost"]->value }}'> {{ $v["service"] }} ({{ number_format($v["cost"]->value) }}) Estimated {{ $v["cost"]->etd }}</option>
 											@endForeach
 										</select>
+									</div>
+
+									<div class="mt-20 form-input col-md-6">
+										<span>Yang Harus dibayar:</span><br/>
+										<input type="text" readonly="readonly" class="form-control price" id="price_{{ $key }}" name="price[]">
 									</div>
 
 									<div class="mt-20 form-input col-md-12">
@@ -139,20 +144,30 @@
 	            	
 	            	<div class="row" style="background: white; min-height: 100px; padding: 0 0 0 10px">
 	            		<div class="mt-20 form-input">
-	            			<span>Biaya Kirim:</span><br/>
-								<input type="text" readonly="" class="form-control" name="total_pembayaran_shipping" value="50,000">
+	            			<span>Total Biaya Kirim:</span><br/>
+								<input type="text" readonly="" class="form-control" id="total_pembayaran_shipping" name="summary_shipping" value="50,000">
 	            		</div>
 
 	            		<div class="mt-20 form-input">
-	            			<span>Biaya Barang:</span><br/>
-								<input type="text" readonly="" class="form-control" name="total_pembayaran_barang" value="150,000">
+	            			<span>Total Biaya Barang:</span><br/>
+								<input type="text" readonly="" class="form-control" id="total_pembayaran_barang" name="summary_price" value="150,000">
 	            		</div>
 
-	            		<div class="mt-20 form-input " style="margin-bottom: 10px;">
-	            			<button style="" class="btn btn-primary">Checkout</button>
+	            		<div class="mt-20 form-input">
+	            			<span>Total Biaya Deposit:</span><br/>
+								<input type="text" readonly="" class="form-control" id="total_pembayaran_deposit" name="summary_deposit" value="150,000">
 	            		</div>
 
-	            	</div>	            	
+	            		<div class="mt-20 form-input">
+	            			<span>Total Semua:</span><br/>
+								<input type="text" readonly="" class="form-control" id="total_semua" name="summary_all" value="150,000">
+	            		</div>
+
+	            		<div class="mt-20 form-input" style="margin-bottom: 10px">
+	            			<button class="btn btn-primary">Checkout</button>
+	            		</div>
+	            	</div>
+				
 	            </div>
 	         </div>
          </div>         
@@ -168,6 +183,7 @@
 <script type="text/javascript">
 	$(function() {
 		end_date();
+		hitung_semua();
 
 		@if(count($data) > 0)
 			@foreach($data as $key => $value)
@@ -182,7 +198,7 @@
 
 		 $(".price_type").change(function(){
             end_date();
-            // count_price();   
+            hitung_semua();   
          });
 
 		function end_date()
@@ -230,9 +246,39 @@
 				let addres = full_address+" "+ postal_code+" "+district_name+" , "+regency_name+" "+provincy_name;
 				$("#detail_address_"+id).html(addres);
 				$("#full_address_"+id).val(addres);
-
-			
       	});
+
+        	function hitung_semua()
+        	{
+        		let total_price = 0;
+        		let total_shipping = 0;
+        		let total_deposit = 0;
+        		let total_semua = 0;
+        		$( ".price_type" ).each(function( index ) {
+	  				let id = $(this).data('id');
+	  				let price = parseInt($("#price_type_"+id).val());
+	  				let shipping = parseInt($("#shipping_"+id).val());
+	  				let deposit = parseInt($("#deposit_"+id).val().replace(/,/g, ''));
+	  				let dibayar = price + shipping + deposit;
+
+	  				total_price +=  price ;
+	  				total_shipping += shipping;
+	  				total_deposit += deposit;
+
+	  				$("#price_"+id).val(format2(dibayar, '').slice(0, -3));
+				});
+
+				$("#total_pembayaran_shipping").val(format2(total_shipping, '').slice(0, -3));
+				$("#total_pembayaran_barang").val(format2(total_price, '').slice(0, -3));
+				$("#total_pembayaran_deposit").val(format2(total_deposit, '').slice(0, -3));
+				total_semua = total_price + total_shipping + dibayar;
+				$("#total_semua").val(format2(total_semua, '').slice(0, -3));
+        	}
+        	
+
+			function format2(n, currency) {
+            return currency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+         }
 	});
 
 </script>
