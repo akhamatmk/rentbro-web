@@ -15,19 +15,19 @@
                <div class="my-account-section" style="padding: 0 30px 20px;">
                   <div class="my-account-section__header">
                      <div class="my-account-section__header-left">
-                        <div class="my-account-section__header-title">Detail Transaksi</div>
+                        <div class="my-account-section__header-title">Keranjang Belanja</div>
                      </div>
                   </div>
 					@if(count($data) > 0)
 						@foreach($data as $key => $value)
 							<div class="row">
 								<div class="col-md-2">
-									<img height="100px" src="{{ $value->product->image->thumbnail }}">
+									<img height="100px" src="{{ $value->product->image->real }}">
 								</div>
 
 								<div class="row col-md-10 mt-10">
 									<div class="col-md-12"><strong style="font-size: 18px">{{ $value->product->name }}</strong></div>
-									<div class="col-md-6">
+									<div class="col-md-6 mt-20">
                                  		<span>Lama Peminjaman :</span>
                                  		<select class="form-control price_type" data-id="{{ $key }}" id="price_type_{{ $key }}" name="price[]">
 		                                @foreach($value->product->price as $k => $v)
@@ -52,11 +52,10 @@
 		                                 @endForeach
 		                              </select>
                               		</div>
-									<div class="col-md-12 mt-20"></div>
 
-									<div class="col-md-6">
+									<div class="col-md-6 mt-20">
                                  		<span>Deposit</span>
-                                 		<input type="text" class="form-control deposit" data-id="{{ $key }}" name="deposit[]" readonly="readonly" id="deposit_{{ $key }}" value="{{ $value->product->minimum_deposit }}"> 
+                                 		<input type="text" class="form-control deposit" data-id="{{ $key }}" name="deposit[]" readonly="readonly" id="deposit_{{ $key }}" value="{{ number_format($value->product->minimum_deposit) }}"> 
                               		</div>
 
                               		<div class="col-md-12 mt-20"></div>
@@ -101,15 +100,6 @@
 										</select>
 									</div>
 									<div class="col-md-12"></div>
-									<div class="mt-20 form-input col-md-6">
-										<span><b>Detail Alamat </b></span>
-										<p id="detail_address_{{$key}}">
-											{{ $full_address }} {{ $postal_code }} {{ $district_name }}, {{ $regency_name }} {{ $provincy_name }}
-										</p>
-										<input type="hidden" data-id="{{ $key }}" name="full_address[]" id="full_address_{{ $key }}" value="{{ $full_address }} {{ $postal_code }} {{ $district_name }}, {{ $regency_name }} {{ $provincy_name }}">
-									</div>
-
-									<div class="col-md-12"></div>
 
 									<div class="mt-20 form-input col-md-6">
 										<span>Courir:</span><br/>
@@ -128,6 +118,14 @@
 											@endForeach
 										</select>
 									</div>
+
+									<div class="mt-20 form-input col-md-12">
+										<span><b>Detail Alamat </b></span>
+										<p id="detail_address_{{$key}}">
+											{{ $full_address }} {{ $postal_code }} {{ $district_name }}, {{ $regency_name }} {{ $provincy_name }}
+										</p>
+										<input type="hidden" data-id="{{ $key }}" name="full_address[]" id="full_address_{{ $key }}" value="{{ $full_address }} {{ $postal_code }} {{ $district_name }}, {{ $regency_name }} {{ $provincy_name }}">
+									</div>									
                            		</div>								
 							</div>
 							<hr/>
@@ -142,24 +140,19 @@
 	            	<div class="row" style="background: white; min-height: 100px; padding: 0 0 0 10px">
 	            		<div class="mt-20 form-input">
 	            			<span>Biaya Kirim:</span><br/>
-							<input type="text" readonly="" class="form-control" name="total_pembayaran_shipping" value="50,000">
+								<input type="text" readonly="" class="form-control" name="total_pembayaran_shipping" value="50,000">
 	            		</div>
-	            	</div>
 
-	            	<div class="row" style="background: white; min-height: 100px; padding: 0 0 0 10px">
 	            		<div class="mt-20 form-input">
 	            			<span>Biaya Barang:</span><br/>
-							<input type="text" readonly="" class="form-control" name="total_pembayaran_barang" value="150,000">
-	            		</div>
-	            	</div>
-
-	            	<div class="row" style="background: white; min-height: 100px; padding: 0 0 0 10px">
-	            		<div class="mt-20 form-input">
-	            			<button style="float: right;" class="btn btn-primary">Checkout</button>
+								<input type="text" readonly="" class="form-control" name="total_pembayaran_barang" value="150,000">
 	            		</div>
 
-	            	</div>
-				
+	            		<div class="mt-20 form-input " style="margin-bottom: 10px;">
+	            			<button style="" class="btn btn-primary">Checkout</button>
+	            		</div>
+
+	            	</div>	            	
 	            </div>
 	         </div>
          </div>         
@@ -227,21 +220,19 @@
         }
 
         $(".place_id").change(function(){
-
       		let selected = $(this).find(':selected');
       		let id  = selected.data('id');
-
       		let full_address  = selected.data('full_address');
-			let postal_code   = selected.data('postal_code');
-			let district_name = selected.data('district_name');
-			let regency_name  = selected.data('regency_name');
-			let provincy_name = selected.data('provincy_name');
-			let addres = full_address+" "+ postal_code+" "+district_name+" , "+regency_name+" "+provincy_name;
-			$("#detail_address_"+id).html(addres);
+				let postal_code   = selected.data('postal_code');
+				let district_name = selected.data('district_name');
+				let regency_name  = selected.data('regency_name');
+				let provincy_name = selected.data('provincy_name');
+				let addres = full_address+" "+ postal_code+" "+district_name+" , "+regency_name+" "+provincy_name;
+				$("#detail_address_"+id).html(addres);
+				$("#full_address_"+id).val(addres);
+
 			
       	});
-
-
 	});
 
 </script>
