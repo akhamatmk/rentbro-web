@@ -37,6 +37,12 @@ class ChartController extends Controller
 	public function checkout()
 	{
 		$response = get_api_response('chart/checkout', 'POST', [], $_POST);
-		dd($response);
+		return redirect('invoice/'.$response->data->code_trans);
+	}
+
+	public function destroy($chart)
+	{
+		$response = get_api_response('chart/'.$chart, 'DELETE');
+		return response()->json($response->data);
 	}
 }

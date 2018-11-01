@@ -16,14 +16,15 @@ Route::get('user/make/newPassword')->uses('User\UserController@send_code_new_pas
 Route::post('make/new/password')->uses('User\UserController@make_new_password')->middleware('with.auth');
 Route::post('account/change/password')->uses('User\UserController@change_password_store')->middleware('with.auth');
 
-
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
 
 Route::get('courier', 'ShippingController@courier');
 
+Route::get('invoice/{inv}', 'TransactionController@invoice')->middleware('with.auth');
 Route::get('ajax/chart/list', 'ChartController@ajax');
 Route::get('chart', 'ChartController@list')->middleware('with.auth');
+Route::delete('chart/{chart}', 'ChartController@destroy')->middleware('with.auth');
 Route::post('chart', 'ChartController@checkout')->middleware('with.auth');
 
 Route::get('shipping/price', 'ShippingController@price');
