@@ -11,7 +11,7 @@
       <div class="user-content">
          <div class="container">
             <div class="row" style="min-height: 200px;" >
-               <div class="col-lg-9 mt-10 user-page__content">
+               <div class="col-md-7 mt-10 user-page__content">
                   <div class="my-account-section" style="padding: 0 30px 20px;">
                      <div class="my-account-section__header">
                         <div class="my-account-section__header-left">
@@ -21,19 +21,20 @@
                      @if(count($data) > 0)
                      @foreach($data as $key => $value)
                      <div id="chart_{{ $key }}">
-                        <div class="row" >
-                           <div class="col-md-2">
-                              <img height="100px" width="100px" src="{{ $value->product->image->real }}">
-                              <input type="hidden" name="item_id[]" value="{{  $value->product->id }}">
-                              <input type="hidden" name="item_name[]" value="{{  $value->product->name }}">
-                              <input type="hidden" name="item_image[]" value="{{  $value->product->image->real }}">
-                           </div>
-                           <div class="row col-md-10 mt-10">
-                              <div class="col-md-10"><strong style="font-size: 18px">{{ $value->product->name }}</strong></div>
+                        <div class="row" >                         
+                           <div class="row col-md-12 mt-10">
+                              <div class="col-md-10">
+                                <strong style="font-size: 18px; ">{{ $value->product->name }}</strong><br/>
+                                <input type="hidden" name="item_id[]" value="{{  $value->product->id }}">
+                                <input type="hidden" name="item_name[]" value="{{  $value->product->name }}">
+                                <input type="hidden" name="item_image[]" value="{{  $value->product->image->real }}">
+                                <img height="100px" width="100px" src="{{ $value->product->image->real }}">
+                              </div>
                               <img  style="cursor: pointer;" alt="delete this data" data-chart="{{ $value->id }}" data-id="{{ $key }}" class="col-md-2 trash" height="50px" src="{{ asset('images/trash.png')}}">
                               <div class="col-md-6 mt-20">
                                  <span>Lama Peminjaman :</span>
                                  <select class="form-control price_type" data-id="{{ $key }}" id="price_type_{{ $key }}" name="price_item[]">
+                                  @php $t = " " @endphp
                                     @foreach($value->product->price as $k => $v)
                                     <option data-type="{{ $v->type }}" data-amount="{{ $v->amount }}" data-price="{{ $v->price }}" value="{{ $v->price }}"> Rp. {{ number_format($v->price) }} / {{ $v->amount }}
                                     	
@@ -141,28 +142,31 @@
                      @endIf
                   </div>
                </div>
-               <div class="col-lg-3 mt-10 ">
+               <div class="col-lg-5 mt-10 ">
                   <div class="my-account-section" style="padding: 0 10px 20px;">
-                     <div class="row" style="background: white; min-height: 100px; padding: 0 0 0 10px">
-                        <div class="mt-20 form-input">
+                     <div class="row" style="background: white; min-height: 100px; padding: 0 0 0 20px">
+                        <div class="mt-20 form-input row col-md-10">
                            <span>Total Biaya Kirim:</span><br/>
                            <input type="text" readonly="" class="form-control" id="total_pembayaran_shipping" name="summary_shipping" value="50,000">
                         </div>
-                        <div class="mt-20 form-input">
+                        <div class="mt-20 form-input row col-md-10">
                            <span>Total Biaya Barang:</span><br/>
                            <input type="text" readonly="" class="form-control" id="total_pembayaran_barang" name="summary_price" value="150,000">
                         </div>
-                        <div class="mt-20 form-input">
+                        <div class="mt-20 form-input row col-md-10">
                            <span>Total Biaya Deposit:</span><br/>
                            <input type="text" readonly="" class="form-control" id="total_pembayaran_deposit" name="summary_deposit" value="150,000">
                         </div>
-                        <div class="mt-20 form-input">
+                        <div class="mt-20 form-input row col-md-10">
                            <span>Total Semua:</span><br/>
                            <input type="text" readonly="" class="form-control" id="total_semua" name="summary_all" value="150,000">
                         </div>
-                        <div class="mt-20 form-input" style="margin-bottom: 10px">
-                           <button class="btn btn-primary">Checkout</button>
-                        </div>
+                        
+
+                        <div class="mt-20 form-input row col-md-10 " style="margin-bottom: 20px">
+                           <button class="btn btn-primary">Checkout</button>                           
+                        </div>                                       
+
                      </div>
                   </div>
                </div>

@@ -24,6 +24,7 @@ class ProductController extends Controller
 		$courier = null;
 		$cost = [];
 		$distance = 0;
+
 		if(! empty($user->data->id)){
 			$address = get_api_response('user/address')->data;
 			$data_user = $user->data;		

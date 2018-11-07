@@ -248,7 +248,7 @@
                            </div>
                                                                                                    
                            <div class="row mt-10" style="margin-left: 5px">
-                              <button class="add-to-cart btn btn-default" style="margin-right: 10px" type="submit">add to cart</button>
+                              <button class="add-to-cart btn btn-default" style="margin-right: 10px; cursor: pointer;" type="submit">add to cart</button>
                               <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
                            </div>
                         </div>

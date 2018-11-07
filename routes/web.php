@@ -29,7 +29,7 @@ Route::post('chart', 'ChartController@checkout')->middleware('with.auth');
 
 Route::get('shipping/price', 'ShippingController@price');
 Route::get('product/{vendor}/{product}', 'ProductController@detail');
-Route::post('product/{vendor}/{product}', 'ProductController@chart');
+Route::post('product/{vendor}/{product}', 'ProductController@chart')->middleware('with.auth');
 
 Route::get('place/regency', 'PlaceController@regency');
 Route::get('place/regency', 'PlaceController@regency');
