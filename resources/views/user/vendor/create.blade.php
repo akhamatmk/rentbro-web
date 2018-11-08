@@ -152,6 +152,7 @@
 @endsection
 
 @section('footer-script')
+	<script src="{{ asset('js/dropzone.js') }}"></script>
 	<script type="text/javascript">		
 		$(function() {
 			$('.alphaNumeric').keypress(function (e) {

@@ -4,9 +4,13 @@
    padding: 0;
    height: 100%;
    }
+
+   .gm-style-mtc {
+  display: none;
+}
 </style>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnsrr4j7KEgyMbE9Nc0AE2L2cwYyK9Cio&v=3.exp&sensor=false&libraries=places"></script>
-<input id="pac-input" class="controls" type="text" placeholder="Search Box" style="width: 300px;
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnsrr4j7KEgyMbE9Nc0AE2L2cwYyK9Cio&v=3.exp&language=id&region=ID&libraries=places"></script>
+<input id="pac-input" class="controls form-control" type="text" placeholder="Search Box" style="width: 300px;
    height: 27px;
    margin-top: 10px;
    border-radius: 4px;">
@@ -28,23 +32,10 @@
              lat: latitude,
              lng: longitude
            },
-           zoom: 12
+           zoom: 18
       });
 
-      let marker = new google.maps.Marker();
-
-     //  map.addListener('center_changed', function() {
-     //      // 3 seconds after the center of the map has changed, pan back to the
-     //      // marker.
-     //   window.setTimeout(function() {
-     //     map.panTo(marker.getPosition());
-     //   }, 3000);
-     // });
-
-     // marker.addListener('click', function() {
-     //   map.setZoom(8);
-     //   map.setCenter(marker.getPosition());
-     // });
+      let marker = new google.maps.Marker();   
    
       markers.push(marker);
       let searchBox = new google.maps.places.SearchBox(document.getElementById('pac-input'));

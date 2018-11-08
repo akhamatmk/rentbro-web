@@ -24,11 +24,22 @@ class VendorController extends Controller
     	return view('user/vendor/create')->with('province', $province->data);
     }
 
+    public function locationEdit($nickname)
+    {        
+        $response = get_api_response('location/'.$nickname.'/vendor/edit', 'POST', [], $_POST);
+        return redirect('vendor/'.$nickname.'/profile');
+    }
+
     public function profile($nickname)
     {
         $response = get_api_response('user/info');
         $vendor = get_api_response('vendor/'.$nickname.'/profile');
         $product = get_api_response('vendor/'.$nickname.'/list_product');
+        $vendor_location = get_api_response('vendor/'.$nickname.'/location/first')->data;
+        $province = get_api_response('place/province');
+        $regency = get_api_response('place/regency', 'GET', [], ['province_id' => $vendor_location->regency->province_id])->data;
+        $district = get_api_response('place/district', 'GET', [], ['regency_id' => $vendor_location->regency->id])->data;            
+
         if($vendor->code != 200)
             return redirect('/');
 
@@ -38,6 +49,10 @@ class VendorController extends Controller
                     ->with('product', $product->data)
                     ->with('menu', 'vendor')
                     ->with('menu_tab', 'profile')
+                    ->with('location', $vendor_location)
+                    ->with('province', $province->data)
+                    ->with('regency', $regency)
+                    ->with('district', $district)
                     ->with('active', 'vendor_'.$vendor->data->nickname);
     }
 

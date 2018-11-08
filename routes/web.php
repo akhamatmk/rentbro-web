@@ -81,6 +81,9 @@ Route::post('check/email')->uses('User\UserController@check_email');
 Route::post('check/username')->uses('User\UserController@check_username');
 
 Route::post('validation')->uses('User\UserController@validation_store')->middleware('with.auth');
+
+Route::post('location/{nickname}/vendor/edit', 'User\VendorController@locationEdit')->middleware('with.auth');
+
 Route::group(['prefix' => 'vendor', 'middleware' => ['with.auth']], function(){
 	Route::get('/')->uses('User\VendorController@index');
 	Route::post('/')->uses('User\VendorController@store');
