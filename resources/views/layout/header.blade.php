@@ -16,8 +16,8 @@
 						<div class="header_search">
 							<div class="header_search_content">
 								<div class="header_search_form_container">
-									<form action="#" class="header_search_form clearfix">
-										<input type="search" required="required" class="header_search_input" placeholder="Search for products...">
+									<form method="GET" action="{{ url('search') }}" class="header_search_form clearfix">
+										<input type="search" name="q"  required="required" class="header_search_input" placeholder="Search for products...">
 
 
 										<div class="custom_dropdown" style="display: none">
@@ -48,7 +48,7 @@
 							<div class="wishlist d-flex flex-row align-items-center justify-content-end">
 								<div class="wishlist_icon"><img src="{{ asset('images/heart.png')}}" alt=""></div>
 								<div class="wishlist_content">
-									<div class="wishlist_text"><a href="#">Wishlist</a></div>
+									<div class="wishlist_text"><a href="{{ url('wishlist') }}">Wishlist</a></div>
 									<!-- <div class="wishlist_count">115</div> -->
 								</div>
 							</div>

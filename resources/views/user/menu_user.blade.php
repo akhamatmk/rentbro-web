@@ -35,7 +35,6 @@
                   <li><a href="{{ url('account/address')  }}" class="child_nav @if(isset($active) AND $active == 'address') active @endIf"><span class="glyphicon glyphicon-send"></span> Alamat</a></li>
                   <li><a href="{{ url('account/change_password')  }}" class="child_nav @if(isset($active) AND $active == 'change_password') active @endIf"><span class="glyphicon glyphicon-send"></span> Ubah Password</a></li>
                @endIf
-               <!-- <li><a href="{{ url('vendor/create')  }}"><span class="glyphicon glyphicon-send"></span> Create Vendor</a></li> -->
                
                @if (isset($menu) AND $menu == 'vendor')
                   @if(isset($user->vendor) and count($user->vendor) > 0)

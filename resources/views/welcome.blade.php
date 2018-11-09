@@ -13,7 +13,7 @@
 	
   @include('landing_page.banner')
 
-	<div class="container">
+	<!-- <div class="container">
 		<div class="row">
 			@foreach($product as $value)
 				<a href="{{ URL('product/'.$value->vendor->nickname.'/'.$value->alias) }}">
@@ -65,7 +65,7 @@
 				</a>
 			@endForeach
 		</div>
-	</div>
+	</div> -->
 
   @include('landing_page.inspiration')
 

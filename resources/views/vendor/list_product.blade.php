@@ -125,9 +125,9 @@ h6 {
 	<a class="btn btn-primary" style=" margin-bottom: 20px" href="{{ url($vendor->nickname.'/product-add') }}"> Tambah Produk</a>
 	<div class="products mb-20">
 		@foreach($product as $value)			
-			<div class="product-card">
+			<div class=" col-md-2" style="border: 1px solid #ddd; margin-bottom: 10px;">
 				<a href="{{ url('product/'.$vendor->nickname.'/'.$value->alias) }}">
-				<div class="product-image">
+				<div class="product-image" style="margin-top: 10px">
 					<img src="{{ $value->image->real }}">
 				</div>
 				<div class="product-info">
@@ -145,12 +145,5 @@ h6 {
 			
 		@endForeach
 
-		@if(count($product) > 0 And count($product) < 5)
-			@for($a = count($product); $a <= 5; $a++)
-				<div class="product-card">
-			
-				</div>
-			@endFor	
-		@endIf
 		<br><br><br><br>
 	</div>

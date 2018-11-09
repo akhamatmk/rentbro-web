@@ -1,3 +1,16 @@
+@extends('layout.app')
+
+@section('title', 'Koperasi Dana Masyarakat Indonesia')
+
+@section('content')
+
+<div class="super_container">
+	
+  <header class="header">
+    @include('layout.top_header')
+    @include('layout.header', ['noCategory' => "yes"])
+  </header>
+
 <!-- Hot New Arrivals -->
 
 	<div class="new_arrivals">
@@ -7,7 +20,7 @@
 					<div class="tabbed_container">
 						<div class="tabs clearfix tabs-left">
 							<ul class="clearfix">
-								<li class="active">Featured</li>
+								<li class="active">Hasil Pencarian Product dengan kata kunci '{{ $_GET['q'] }}'</li>
 							</ul>
 							<div class="tabs_line"><span></span></div>
 						</div>
@@ -78,6 +91,11 @@
 			</div>
 		</div>		
 	</div>
+
+  @include('layout.footer')
+
+@endsection
+
 
 @section('footer-script')
 	<script type="text/javascript">

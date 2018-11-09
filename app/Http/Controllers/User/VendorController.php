@@ -30,6 +30,12 @@ class VendorController extends Controller
         return redirect('vendor/'.$nickname.'/profile');
     }
 
+    public function edit_profile($nickname)
+    {
+        $response = get_api_response('vendor/'.$nickname.'/edit/profile', 'POST', [], $_POST);
+        return redirect('vendor/'.$nickname.'/profile');
+    }
+
     public function profile($nickname)
     {
         $response = get_api_response('user/info');

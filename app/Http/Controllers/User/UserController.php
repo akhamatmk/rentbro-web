@@ -59,7 +59,7 @@ class UserController extends Controller
                     ->with('menu', 'account')
                     ->with('address', $address->data)
                     ->with('province', $province->data)
-                    ->with('active', 'address');   
+                    ->with('active', 'address');
     }
 
     public function make_new_password(Request $request)

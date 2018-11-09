@@ -19,6 +19,11 @@ Route::post('account/change/password')->uses('User\UserController@change_passwor
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
 
+Route::get('search', 'SearchController@index')->name('search');
+
+Route::get('wishlist')->uses('WishlistController@list')->middleware('with.auth');
+Route::get('wishlist/add')->uses('WishlistController@add');
+
 Route::get('courier', 'ShippingController@courier');
 
 Route::get('invoice/{inv}', 'TransactionController@invoice')->middleware('with.auth');
@@ -94,6 +99,8 @@ Route::group(['prefix' => 'vendor', 'middleware' => ['with.auth']], function(){
 
 	Route::get('{nickname}/profile')->uses('User\VendorController@profile');
 	Route::get('{nickname}/list_product')->uses('User\VendorController@list_product');
+
+	Route::post('{nickname}/edit/profile')->uses('User\VendorController@edit_profile');
 });
 
 Route::post('catalog/{id}')->uses('CatalogController@show_ajax');
