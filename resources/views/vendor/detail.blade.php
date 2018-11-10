@@ -23,8 +23,8 @@
                   </div>
                   <div class="content-body-vendor">
                      <main style="margin-bottom: 20px">
-                        <input id="tab1" type="radio" name="tabs" checked> <label for="tab1">Detail Vendor</label>
-                        <input id="tab2" type="radio" name="tabs" > <label for="tab2">List Product</label>
+                        <input id="tab1" type="radio" name="tabs" > <label for="tab1">Detail Vendor</label>
+                        <input id="tab2" type="radio" name="tabs" checked> <label for="tab2">List Product</label>
                         <input id="tab3" type="radio" name="tabs" > <label for="tab3">Alamat Vendor</label>
                         
                         <section class="content" id="content1">

@@ -126,7 +126,7 @@ h6 {
 	<div class="products mb-20">
 		@foreach($product as $value)			
 			<div class=" col-md-2" style="border: 1px solid #ddd; margin-bottom: 10px;">
-				<a href="{{ url('product/'.$vendor->nickname.'/'.$value->alias) }}">
+				<a href="{{ url('edit/product/'.$vendor->nickname.'/'.$value->alias) }}">
 				<div class="product-image" style="margin-top: 10px">
 					<img src="{{ $value->image->real }}">
 				</div>

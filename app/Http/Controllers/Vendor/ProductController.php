@@ -31,6 +31,37 @@ class ProductController extends Controller
                 ->with('catalogue', $catalogue->data);
     }
 
+    public function edit_product($vendor, $product)
+    {        
+        $v = get_api_response('vendor/'.$vendor.'/profile');
+        if($v->code != 200)
+            return redirect('/');
+        
+        $p = get_api_response('product/'.$vendor.'/'.$product);
+        $response = get_api_response('user/info');
+        $catalogue = get_api_response('catalogue');
+        $productOptpion = get_api_response('product/option');
+        $price_type[1] = 'Harian';
+        $price_type[2] = 'Mingguan'; 
+        $price_type[3] = 'Bulanan';
+
+        return view('vendor/product/edit')
+                ->with('user', $response->data)
+                ->with('vendor', $v->data)
+                ->with('menu', 'add product')
+                ->with('product_option', $productOptpion->data)
+                ->with('price_type', $price_type)
+                ->with('product', $p->data)
+                ->with('catalogue', $catalogue->data);
+    }
+
+    public function edit_product_store($vendor, $product)
+    {
+        Session::flash('message-success', 'Sukses');
+
+        return redirect('edit/product/'.$vendor.'/'.$product);
+    }
+
     public function store($nickname, Request $request)
     {
 

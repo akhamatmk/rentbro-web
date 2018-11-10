@@ -87,8 +87,10 @@
     <script src="https://cdn.jsdelivr.net/npm/zebra_datepicker@latest/dist/zebra_datepicker.min.js"></script> 
     
     @yield('footer-script')
-
-    Dropzone.autoDiscover = false;
+    <script type="text/javascript">
+        Dropzone.autoDiscover = false;
+    </script>
+    
 </body>
 
 </html>

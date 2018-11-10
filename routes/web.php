@@ -11,6 +11,9 @@
 |
 */
 
+Route::get('edit/product/{vendor}/{product}', 'Vendor\ProductController@edit_product')->middleware('with.auth');
+Route::post('edit/product/{vendor}/{product}', 'Vendor\ProductController@edit_product_store')->middleware('with.auth');
+
 Route::get('set/newPassword/{code}', 'User\UserController@verify_code_new_password')->middleware('with.auth');
 Route::get('user/make/newPassword')->uses('User\UserController@send_code_new_password')->middleware('with.auth');
 Route::post('make/new/password')->uses('User\UserController@make_new_password')->middleware('with.auth');
@@ -18,6 +21,10 @@ Route::post('account/change/password')->uses('User\UserController@change_passwor
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
+
+
+Route::get('category/{alias}', 'CategoryController@product');
+Route::get('category', 'CategoryController@index');
 
 Route::get('search', 'SearchController@index')->name('search');
 
